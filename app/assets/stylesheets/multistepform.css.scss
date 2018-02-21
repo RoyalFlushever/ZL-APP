@@ -1,0 +1,242 @@
+
+/*
+ * Globals
+ */
+
+/* Links */
+a,
+a:focus,
+a:hover {
+  color: #333;
+}
+
+/* Custom default button */
+.btn-secondary,
+.btn-secondary:hover,
+.btn-secondary:focus {
+  color: #fff;
+  text-shadow: none; /* Prevent inheritance from `body` */
+  background-color: blue;
+  border: .05rem solid #fff;
+}
+
+
+/*
+ * Base structure
+ */
+
+html,
+body {
+  height: 100%;
+  background-color: #eee; 
+}
+
+body {
+  justify-content: center;
+  color: #000;
+}
+
+/*
+ * Header
+ */
+.masthead {
+  margin-bottom: 2rem;
+  text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
+}
+
+.inner {
+  width: 80em;
+}
+
+.masthead-brand {
+  margin-bottom: 0;
+}
+
+.nav-masthead .nav-link {
+  padding: .25rem 0;
+  font-weight: 700;
+  color: rgba(0, 0, 0, .5);
+  background-color: transparent;
+  border-bottom: .25rem solid transparent;
+}
+
+.nav-masthead .nav-link:hover,
+.nav-masthead .nav-link:focus {
+  border-bottom-color: rgba(255, 255, 255, .25);
+}
+
+.nav-masthead .nav-link + .nav-link {
+  margin-left: 1rem;
+}
+
+.nav-masthead .active {
+  color: #333;
+  border-bottom-color: #fff;
+}
+
+@media (min-width: 48em) {
+  .masthead-brand {
+    float: left;
+  }
+  .nav-masthead {
+    float: right;
+  }
+}
+
+
+/*
+ * Cover
+ */
+.cover {
+  padding: 0 1.5rem;
+  /*background-image: url("images/fba.zenarbitrage.com.png");
+  background-position: 50% 5%;
+  background-size: cover;
+  opacity: .6;
+  filter: blur(3.5px);*/
+}
+.cover .btn-lg {
+  padding: .75rem 1.25rem;
+  font-weight: 700;
+}
+
+.blur-teaser {
+  -webkit-filter: blur(3.5px);
+  filter: blur(3.5px);
+} 
+
+/*
+* Form Container
+*/
+.form-container {
+  background-color: #fff;
+  color: #4c4e56; 
+  border-radius: 1em;
+  width: 50em;
+  position: absolute; 
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+}
+
+
+.heading {
+  color: #fff;
+  background-color: #36475E;
+  border-top-right-radius: 1em;
+  border-top-left-radius: 1em;
+  padding: .5rem 3rem!important; 
+}
+
+.content {
+  text-shadow: none;
+  display: block;
+  max-width: 40em;
+  padding: 1rem!important;
+  margin-bottom: 1rem!important;
+}
+
+.btn-outline-primary:hover {
+  color: #007bff;
+  background-color: transparent;
+  background-image: none;
+  border-color: #007bff;
+}
+
+.btn-outline-primary{
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff
+}
+
+.upload-container {
+  border-radius: .8em;
+  border: solid 1px #d58147;
+  margin: 1rem 1rem!important;
+}
+
+.box-placeholder {
+  border-radius: .8em;
+}
+
+#upload-dropzone {
+  height: 15em;
+  border-radius: .8em;
+  border-color: #DADADA; 
+  border-style: dashed;
+
+  align-items: center;
+  justify-content: center;
+}
+
+.dropzone-wrapper {
+  max-width: 50%;
+}
+
+.or {
+  color: #B4B4B4;
+}
+
+/*
+Scanning Inventory Step
+*/
+
+.scan-inventory {
+  display: none;
+}
+
+.progress-bar {
+  background-color: #2980B9;
+}
+
+.done:after {
+  content: '%';
+}
+
+.value {
+  font-weight: 400;
+  font-size: 1.375rem;
+  color: #000;
+}
+
+.value:before {
+  content: '$';
+}
+
+.trade-in, .buyback {
+  width: 70%;
+}
+
+.trade-in h4, .buyback h4 {
+  color: #000;
+  font-weight: 900;
+}
+
+/*
+Payment Step
+ */
+
+.payment-step {
+  display: none;
+}
+
+.pay-btn {
+  background-color: #3498DB;
+}
+
+.form-card input {
+  width: 200px;
+  margin: 10px auto;
+  display: block;
+}
+
+
+/*
+ * Footer
+ */
+.mastfoot {
+  color: rgba(0, 0, 0, .5);
+}
