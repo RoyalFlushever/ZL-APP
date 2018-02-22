@@ -12,7 +12,7 @@
  *= require fonts
  *= require vendor.assets
  *= require multistepform
- * 
+ *
  */
 
 form .clearfix:before, form .clearfix:after {

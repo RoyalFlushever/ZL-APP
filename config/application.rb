@@ -1,6 +1,7 @@
 require_relative 'boot'
 
 require 'rails/all'
+require 'csv'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -29,6 +30,7 @@ module Zlapp
     # precompile themes
     config.assets.precompile += [
       'wraith/themes/theme-a.css',
+      'jquery.fileupload.css' 
     #                              'angle/themes/theme-b.css',
     #                              'angle/themes/theme-c.css',
     #                              'angle/themes/theme-d.css',
@@ -43,7 +45,8 @@ module Zlapp
                                  'forms.js',
                                  'tables.js',
                                  #for controller
-                                 'index.js'
+                                 'index.js',
+                                 'upload.js'
                                ]
 
   end
