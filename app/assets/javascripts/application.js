@@ -11,6 +11,7 @@
 // about supported directives.
 //
 //= require jquery_ujs
+//= require dropzone
 
 //--- Wraith
 //= require_tree ../../../vendor/assets/javascripts/wraith/

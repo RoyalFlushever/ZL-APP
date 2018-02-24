@@ -162,7 +162,8 @@ body {
   border-radius: .8em;
 }
 
-#upload-dropzone {
+.dropzone {
+  display: flex;
   height: 15em;
   border-radius: .8em;
   border-color: #DADADA; 
@@ -185,7 +186,10 @@ Scanning Inventory Step
 */
 
 .scan-inventory {
-  display: none;
+}
+
+.progress {
+  width: 100%!important;
 }
 
 .progress-bar {

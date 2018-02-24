@@ -1,6 +1,5 @@
 require 'csv'
 
-
 class LiqnetController < ApplicationController
 	# parse CSV 
 	def parse
@@ -8,7 +7,7 @@ class LiqnetController < ApplicationController
 		csv = CSV.parse(csv_text,  :headers => true, :encoding => Encoding::ISO_8859_1)
 		
 		csv.each do | row |
-			# puts row.to_hash
+			# puts row.to_hashz
 			t = Inventory.new
 			t.name = row['item-name'] 
       t.listingID = row['listing-id']
@@ -22,8 +21,7 @@ class LiqnetController < ApplicationController
       t.asin2 = row['asin2']
       t.asin3 = row['asin3']
       t.save
-      puts "#{t.name}, #{t.asin1} saved "
-
+      puts "#{t.name}, #{t.asin1} saved"
     end
   end
 end

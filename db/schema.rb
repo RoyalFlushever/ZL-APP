@@ -10,10 +10,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180222083026) do
+ActiveRecord::Schema.define(version: 20180224005732) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "apicredetials", force: :cascade do |t|
+    t.string "access_key"
+    t.string "secret_key"
+    t.string "associate_tag"
+    t.boolean "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "apikeys", force: :cascade do |t|
+    t.string "access_key"
+    t.string "secret_key"
+    t.boolean "assigned"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "companies", force: :cascade do |t|
+    t.string "name"
+    t.string "manager"
+    t.string "status"
+    t.integer "terms"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "inventories", force: :cascade do |t|
     t.string "name"
@@ -29,6 +55,9 @@ ActiveRecord::Schema.define(version: 20180222083026) do
     t.string "asin3"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["asin1"], name: "index_inventories_on_asin1"
+    t.index ["listingID"], name: "index_inventories_on_listingID", unique: true
+    t.index ["sellerSku"], name: "index_inventories_on_sellerSku", unique: true
   end
 
 end

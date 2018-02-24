@@ -23,3 +23,6 @@
 .byebug_history
 
 /bower_components/
+
+# ignore environment variables
+.env

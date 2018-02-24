@@ -1,4 +1,6 @@
 <%= render 'layouts/header' %>
+<%= render 'shared/error_messages' %>
+
    <%= yield %>
 <!-- Page footer-->
   <footer>
@@ -9,6 +11,7 @@
 	 <%= javascript_include_tag 'base' %>
    <%= javascript_include_tag params[:controller] %>
    <%= javascript_include_tag 'application' %>
+   <%= javascript_include_tag 'stripe_global' %>
   </body>
 
 </html>

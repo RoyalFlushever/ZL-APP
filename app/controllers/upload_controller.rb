@@ -6,8 +6,14 @@ class UploadController < ApplicationController
 	end
 
 	def import
-		Inventory.import(params[:file])
-		redirect_to show_path, notice: "Inventory Imported Successfully"
+		if params[:file].blank? || params[:file].path.empty?
+      flash[:error] = "Warning! You must select File first."
+      redirect_to upload_path
+      return
+    else
+			file_name = Inventory.import_from_csv(params[:file])
+			redirect_to progress_path, file_name: file_name
+		end
 	end
 
 	def show

@@ -34,6 +34,11 @@ gem 'jbuilder', '~> 2.5'
 gem 'pg', '0.20.0'
 gem "bower-rails", "~> 0.9.2"
 gem 'jquery-rails'
+gem 'stripe'
+gem 'dropzonejs-rails'
+
+
+gem 'dotenv-rails', :groups => [:development, :test]
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

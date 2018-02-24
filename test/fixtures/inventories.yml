@@ -6,7 +6,7 @@ one:
   sellerSku: MyString
   price: 9.99
   quantity: 1
-  opendate: 2018-02-22 03:30:26
+  opendate: 2018-02-22 21:17:52
   imageUrl: MyString
   isMarketplace: MyString
   asin1: MyString
@@ -19,7 +19,7 @@ two:
   sellerSku: MyString
   price: 9.99
   quantity: 1
-  opendate: 2018-02-22 03:30:26
+  opendate: 2018-02-22 21:17:52
   imageUrl: MyString
   isMarketplace: MyString
   asin1: MyString

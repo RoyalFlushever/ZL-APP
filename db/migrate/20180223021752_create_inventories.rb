@@ -15,5 +15,8 @@ class CreateInventories < ActiveRecord::Migration[5.1]
 
       t.timestamps
     end
+    add_index :inventories, :listingID, unique: true
+    add_index :inventories, :sellerSku, unique: true
+    add_index :inventories, :asin1
   end
 end

@@ -1,0 +1,2 @@
+class Apikey < ApplicationRecord
+end

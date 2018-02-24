@@ -1,5 +1,4 @@
 require_relative 'boot'
-
 require 'rails/all'
 require 'csv'
 
@@ -15,11 +14,9 @@ module Zlapp
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
-      # setup bower components folder for lookup
-      config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components', 'lib')
-
-      config.assets.paths << Rails.root.join('app', 'assets', 'videos')
-
+    # setup bower components folder for lookup
+    config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components', 'lib')
+    config.assets.paths << Rails.root.join('app', 'assets', 'videos')
     # fonts
     config.assets.precompile << /\.(?:svg|eot|woff|ttf)$/
     # images
@@ -27,18 +24,12 @@ module Zlapp
     # precompile vendor assets
     config.assets.precompile += %w( base.js )
     config.assets.precompile += %w( base.css )
+    config.assets.precompile += %w( stripe_global.js )
     # precompile themes
     config.assets.precompile += [
       'wraith/themes/theme-a.css',
-      'jquery.fileupload.css' 
-    #                              'angle/themes/theme-b.css',
-    #                              'angle/themes/theme-c.css',
-    #                              'angle/themes/theme-d.css',
-                                 # 'wraith/themes/theme-e.css'
-                                 # 'angle/themes/theme-f.css',
-                                 # 'angle/themes/theme-g.css',
-                                 # 'angle/themes/theme-h.css'
-                               ]
+      'jquery.fileupload.css',
+    ]
     # Controller assets
     config.assets.precompile += [
                                  # Scripts
@@ -46,8 +37,10 @@ module Zlapp
                                  'tables.js',
                                  #for controller
                                  'index.js',
-                                 'upload.js'
+                                 'upload.js',
+                                 'companies.js',
+                                 'progress.js',
                                ]
 
-  end
-end
+                             end
+                           end
