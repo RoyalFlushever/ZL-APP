@@ -52,10 +52,23 @@
     });
 
     
+    var filename;
+
+    // Dropzone option config. myDropzone - id: my-dropzone
+    Dropzone.options.myDropzone = {
+      uploadMultiple: false,  // only upload one file
+      maxFiles: 1,            // max file upload file : 1  
+      acceptedFiles: ".csv",  // accept .csv file only 
+      dictInvalidFileType: "You can't upload files of this type. Only Accept CSV.",
+      success: function(file, result){
+            filename = result.filename;
+      }             
+    }
+
     // progress bar elements
     // 
     var percent = $('.done');
-    var message = $('.to-amazon h4');
+    var message = $('.to-amazon h5');
     var bar = $('.progress-bar');
     // update progressbar every pingTime
     var pingTime = parseInt($('.scan-progress').data('ping-time'));
@@ -64,16 +77,18 @@
     var ajaxFn = function(){
       $.ajax({
         url: '/start',
+        data: { filename: filename },
         dataType: 'json',
         success: function (data) {
           message.html(data.message);
           percent.html(data.percent);
           bar.css('width', data.percent).html(data.percent);
           
-          $('.tradein-value').html(data.tradeInValue);
-          $('.buyback-value').html(data.buyBackValue);
-          if (data.percent < 100)
-            setTimeout(ajaxFn, pingTime);
+          $('.tradein-value').html(data.tradein);
+          $('.buyback-value').html(data.buyback);
+          
+          // if (data.percent < 10)
+            // setTimeout(ajaxFn, pingTime);
         }
       });
     }
@@ -85,14 +100,7 @@
         ajaxFn();
       });
     });
-
-    // Dropzone option config. myDropzone - id: my-dropzone
-    Dropzone.options.myDropzone = {
-      uploadMultiple: false,  // only upload one file
-      maxFiles: 1,            // max file upload file : 1  
-      acceptedFiles: ".csv",  // accept .csv file only 
-      dictInvalidFileType: "You can't upload files of this type. Only Accept CSV." // 
-    }
+    
   
     $('.get-access').click( function( event ){
       $('.scan-inventory').fadeOut('fast', function() {
@@ -104,7 +112,7 @@
       $('.payment-step').fadeOut('400');
       $('.table-wrapper').removeClass('blur-teaser');
     });
-    
+
   });
 
 })(window, document, window.jQuery);
