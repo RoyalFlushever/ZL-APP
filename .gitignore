@@ -26,3 +26,5 @@
 
 # ignore environment variables
 .env
+
+/public/inventory
