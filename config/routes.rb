@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root 'index#index'
   get '/', to: 'index#index'
+  # progress
+  get 'start', to: 'progress#start'
 
   get 'parse', to: 'liqnet#parse'
   get 'upload', to: 'upload#index'
@@ -15,12 +17,6 @@ Rails.application.routes.draw do
   post 'import_inventory', to: 'upload#import'
   
   get 'show', to: 'upload#show'
-
-  # progress
-  get 'progress', to: 'progress#index'
-
-
-
 
   # api routes
   get '/api/i18n/:locale' => 'api#i18n'

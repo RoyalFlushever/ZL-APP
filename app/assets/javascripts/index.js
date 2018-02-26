@@ -51,13 +51,49 @@
       ]
     });
 
+    
+    // progress bar elements
+    // 
+    var percent = $('.done');
+    var message = $('.to-amazon h4');
+    var bar = $('.progress-bar');
+    // update progressbar every pingTime
+    var pingTime = parseInt($('.scan-progress').data('ping-time'));
+
+    // ajax Function for update progress bar
+    var ajaxFn = function(){
+      $.ajax({
+        url: '/start',
+        dataType: 'json',
+        success: function (data) {
+          message.html(data.message);
+          percent.html(data.percent);
+          bar.css('width', data.percent).html(data.percent);
+          
+          $('.tradein-value').html(data.tradeInValue);
+          $('.buyback-value').html(data.buyBackValue);
+          if (data.percent < 100)
+            setTimeout(ajaxFn, pingTime);
+        }
+      });
+    }
+
     // multi step handle
     $('.show-profit').click( function( event ){
-      $('.sync-amz').fadeOut('fast', function() {
+      $('.sync-amz').fadeOut('fast', function(){
         $('.scan-inventory').fadeIn('fast');
+        ajaxFn();
       });
     });
 
+    // Dropzone option config. myDropzone - id: my-dropzone
+    Dropzone.options.myDropzone = {
+      uploadMultiple: false,  // only upload one file
+      maxFiles: 1,            // max file upload file : 1  
+      acceptedFiles: ".csv",  // accept .csv file only 
+      dictInvalidFileType: "You can't upload files of this type. Only Accept CSV." // 
+    }
+  
     $('.get-access').click( function( event ){
       $('.scan-inventory').fadeOut('fast', function() {
         $('.payment-step').fadeIn('fast');
@@ -68,61 +104,7 @@
       $('.payment-step').fadeOut('400');
       $('.table-wrapper').removeClass('blur-teaser');
     });
-
-    //  // Initialize the jQuery File Upload widget:
-    // $('#fileupload').fileupload({
-    //     // Uncomment the following to send cross-domain cookies:
-    //     //xhrFields: {withCredentials: true},
-    //     // url: 'server/upload'
-    //   });
-
-    // // Enable iframe cross-domain access via redirect option:
-    // $('#fileupload').fileupload(
-    //   'option',
-    //   'redirect',
-    //   window.location.href.replace(
-    //     /\/[^\/]*$/,
-    //     '/cors/result.html?%s'
-    //     )
-    //   );
-
-    // // Load existing files:
-    // $('#fileupload').addClass('fileupload-processing');
-    // $.ajax({
-    //     // Uncomment the following to send cross-domain cookies:
-    //     //xhrFields: {withCredentials: true},
-    //     url: $('#fileupload').fileupload('option', 'url'),
-    //     dataType: 'json',
-    //     context: $('#fileupload')[0]
-    //   }).always(function () {
-    //     $(this).removeClass('fileupload-processing');
-    //   }).done(function (result) {
-    //     $(this).fileupload('option', 'done')
-    //     .call(this, $.Event('done'), {result: result});
-    //   });
     
-    // Basic UI
-    // Change this to the location of your server-side upload handler:
-    // var url = window.location.hostname === 'blueimp.github.io' ?
-    //             '//jquery-file-upload.appspot.com/' : 'server/php/';
-    // $('#fileupload').fileupload({
-    //     url: url,
-    //     dataType: 'json',
-    //     done: function (e, data) {
-    //         $.each(data.result.files, function (index, file) {
-    //             $('<p/>').text(file.name).appendTo('#files');
-    //         });
-    //     },
-    //     progressall: function (e, data) {
-    //         var progress = parseInt(data.loaded / data.total * 100, 10);
-    //         $('#progress .progress-bar').css(
-    //             'width',
-    //             progress + '%'
-    //         );
-    //     }
-    // }).prop('disabled', !$.support.fileInput)
-    //     .parent().addClass($.support.fileInput ? undefined : 'disabled');  
-
   });
 
 })(window, document, window.jQuery);

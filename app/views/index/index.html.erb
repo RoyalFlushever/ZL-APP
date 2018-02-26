@@ -337,7 +337,6 @@
           <!-- END DATATABLE 1-->
         </div>
       </div>
-
       <!-- Multi Step Form -->
       <div class="form-container text-center">
         <!-- First Form for Upload Inventory Files -->
@@ -346,36 +345,49 @@
             <h2>Sync your Amazon inventory</h2>
           </div>
           <div class="content container">
-
             <div class="to-amazon">
               <h4>Upload your inventory file here</h4>
               <a href="https://www.amazon.com/" target="_blank" class="btn btn-outline-primary">Obtain file here</a>
             </div>
 
             <div class="upload-container">
-              <!-- <form action="/csv-upload" id="upload-dropzone" class="dropzone d-flex my-2 mx-2">
-                <div class="dropzone-wrapper">
-                  <div class="dz-default dz-message"><span>Drop files to upload</span>
-                  </div>
-                  <p class="or">or</p>
-                  <span class="btn btn-info fileinput-button dz-clickable">
-                    Choose files to upload
-                  </span>
-                </div>
-              </form> -->
-              <%= form_tag import_inventory_path, class: 'dropzone' %>
+              <%= form_tag import_inventory_path, class: 'dropzone', id: 'my-dropzone' %>
             </div>
-
 
             <div class="to-next">
               <h3>We scan your inventory for instant profit and deliver your profit total.</h3>
-              <%= link_to progress_path, class: "btn btn-success show-profit" do %>
-                Yes! <br> Show me the profit
-              <% end %>
+              <a href="#" class="btn btn-success show-profit"> Yes! <br> Show me the profit </a>
             </div>
           </div>
         </div> 
         
+        <div class="scan-inventory">
+          <div class="heading px-5 py-2 border-top">
+            <h2>Scanning dozens of trade-in &amp; buy back sites</h2>
+          </div>
+          <div class="content container p-3 mb-3">
+            <div class="to-amazon mt-3">
+              <h5 class="mb-2">Calculating Instant profits: <span class="done">37</span> Done</h5>
+            </div>
+            <div class="mx-5 mt-3 mb-5 px-2">
+              <div id="scan-progress">
+                <div class="progress" style="height:30px">
+                  <div class="progress-bar" style="width:0%; height:30px"></div>
+                </div>
+              </div>
+            </div>
+            <div class="to-next text-center">
+              <div class="trade-in clearfix mx-auto mb-3">
+                <h4 class="pull-left mt-1">Instant Trade-In: </h4> <span class="tradein-value value pull-right mb-2">1056</span>
+              </div>
+              <div class="buyback clearfix mx-auto mb-5">
+                <h4 class="pull-left mt-1">Instant Cash Buy Back: </h4><span class="buyback-value value pull-right mb-2">755</span>
+              </div>
+            </div>
+            <a href="" class="btn btn-success get-access px-3 mt-3">Yes! <br/> Get access for $158.40</a>
+          </div>
+        </div>
+
         <div class="payment-step">
           <div class="heading px-5 py-2 border-top">
             <h2>Last step ...</h1>

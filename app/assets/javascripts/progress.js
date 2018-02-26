@@ -25,3 +25,8 @@ $('#datatable1').dataTable({
       {extend: 'print', className: 'btn-sm' }
       ]
 });
+
+(function() {
+  var progressBar = new ProgressBar("#demo", "<%= progress_bar_path @progress_bar %>");
+  progressBar.start();
+})();

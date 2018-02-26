@@ -12,7 +12,7 @@ class UploadController < ApplicationController
       return
     else
 			file_name = Inventory.import_from_csv(params[:file])
-			redirect_to progress_path, file_name: file_name
+			redirect_to start_path, file_name: file_name
 		end
 	end
 

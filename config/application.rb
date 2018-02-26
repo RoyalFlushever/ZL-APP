@@ -35,12 +35,12 @@ module Zlapp
                                  # Scripts
                                  'forms.js',
                                  'tables.js',
+                                 
                                  #for controller
                                  'index.js',
                                  'upload.js',
                                  'companies.js',
                                  'progress.js',
                                ]
-
-                             end
-                           end
+  end
+end

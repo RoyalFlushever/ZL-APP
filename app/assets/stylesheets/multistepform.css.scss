@@ -103,6 +103,7 @@ body {
 .blur-teaser {
   -webkit-filter: blur(3.5px);
   filter: blur(3.5px);
+  pointer-events: none;
 } 
 
 /*
@@ -168,7 +169,6 @@ body {
   border-radius: .8em;
   border-color: #DADADA; 
   border-style: dashed;
-
   align-items: center;
   justify-content: center;
 }
@@ -186,6 +186,7 @@ Scanning Inventory Step
 */
 
 .scan-inventory {
+  display: none;
 }
 
 .progress {
