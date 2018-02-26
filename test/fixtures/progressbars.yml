@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  taskname: MyString
+  percent: 1
+  message: MyString
+  status: 1
+  tradein: 9.99
+  buyback: 9.99
+  profit: 9.99
+
+two:
+  taskname: MyString
+  percent: 1
+  message: MyString
+  status: 1
+  tradein: 9.99
+  buyback: 9.99
+  profit: 9.99

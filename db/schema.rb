@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180224005732) do
+ActiveRecord::Schema.define(version: 20180226102014) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,6 +58,19 @@ ActiveRecord::Schema.define(version: 20180224005732) do
     t.index ["asin1"], name: "index_inventories_on_asin1"
     t.index ["listingID"], name: "index_inventories_on_listingID", unique: true
     t.index ["sellerSku"], name: "index_inventories_on_sellerSku", unique: true
+  end
+
+  create_table "progressbars", force: :cascade do |t|
+    t.string "taskname"
+    t.integer "percent"
+    t.string "message"
+    t.integer "status"
+    t.decimal "tradein"
+    t.decimal "buyback"
+    t.decimal "profit"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["taskname"], name: "index_progressbars_on_taskname", unique: true
   end
 
 end
