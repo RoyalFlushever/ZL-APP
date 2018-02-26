@@ -36,7 +36,7 @@ gem "bower-rails", "~> 0.9.2"
 gem 'jquery-rails'
 gem 'stripe'
 gem 'dropzonejs-rails'
-
+gem 'httparty'
 
 gem 'dotenv-rails', :groups => [:development, :test]
 
