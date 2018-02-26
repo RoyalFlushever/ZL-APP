@@ -11,10 +11,6 @@ class ProgressController < ApplicationController
 	def start
 		filename = params[:filename]
 		@progress_bar = Progressbar.find_by(taskname: filename)
-		# 10.times do |i|
-		# 	sleep(1)
-		# end
-		# DemoWorker.perform_later(@progress_bar)
 		render json: @progress_bar
 	end
 

@@ -1,4 +1,9 @@
 class Progressbar < ApplicationRecord
+
+	 validates_numericality_of :percent,
+    greater_than_or_equal_to: 0,
+    less_than_or_equal_to: 100
+	
 	def self.init filename
 		t = Progressbar.new
 		t.percent = 0

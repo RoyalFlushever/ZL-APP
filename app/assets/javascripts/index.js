@@ -71,7 +71,7 @@
     var message = $('.to-amazon h5');
     var bar = $('.progress-bar');
     // update progressbar every pingTime
-    var pingTime = parseInt($('.scan-progress').data('ping-time'));
+    var pingTime = 1000
 
     // ajax Function for update progress bar
     var ajaxFn = function(){
@@ -80,15 +80,17 @@
         data: { filename: filename },
         dataType: 'json',
         success: function (data) {
-          message.html(data.message);
-          percent.html(data.percent);
-          bar.css('width', data.percent).html(data.percent);
-          
+          var percentHtml = data.percent + "%";
+          bar.css('width', percentHtml);
           $('.tradein-value').html(data.tradein);
           $('.buyback-value').html(data.buyback);
-          
-          // if (data.percent < 10)
-            // setTimeout(ajaxFn, pingTime);
+          console.log(percentHtml);
+          if ( parseInt(data.percent) < 100 ) {
+            message.html(data.message + ": <span class='done'>" + data.percent + "</span> Done");
+            setTimeout(ajaxFn, pingTime);
+          } else {
+            message.html("Finished");
+          }
         }
       });
     }
@@ -98,9 +100,9 @@
       $('.sync-amz').fadeOut('fast', function(){
         $('.scan-inventory').fadeIn('fast');
         ajaxFn();
+        $.get('/create', {filename: filename});
       });
     });
-    
   
     $('.get-access').click( function( event ){
       $('.scan-inventory').fadeOut('fast', function() {
