@@ -37,6 +37,7 @@ gem 'jquery-rails'
 gem 'stripe'
 gem 'dropzonejs-rails'
 gem 'httparty'
+gem 'vacuum'
 
 gem 'dotenv-rails', :groups => [:development, :test]
 
