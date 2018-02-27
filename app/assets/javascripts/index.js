@@ -29,6 +29,7 @@
       'info':     true,  // Bottom left status text
       'responsive': true, // https://datatables.net/extensions/responsive/examples/
       'pageLength': 10,
+      
       // Text translation options
       // Note the required keywords between underscores (e.g _MENU_)
       oLanguage: {
