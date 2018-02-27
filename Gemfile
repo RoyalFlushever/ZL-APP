@@ -38,6 +38,7 @@ gem 'stripe'
 gem 'dropzonejs-rails'
 gem 'httparty'
 gem 'vacuum'
+gem 'typhoeus'
 
 gem 'dotenv-rails', :groups => [:development, :test]
 
