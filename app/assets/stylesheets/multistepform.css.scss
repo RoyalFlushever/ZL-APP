@@ -237,6 +237,54 @@ Payment Step
   display: block;
 }
 
+.control-label {
+  float: left;
+  font-size: 18px;
+  font-weight: 300;
+}
+
+.card-wrapper .fieldset {
+  margin-bottom: 15px;
+}
+
+#card-errors {
+  color: red;
+}
+
+.card-wrapper input {
+  line-height: 18px;
+}
+
+.card-wrapper button {
+  display: block;
+  width: calc(100% - 50px);
+  margin: 0 15px;
+  background-color: #3498DB;
+  border-radius: 12px;
+  color: #fff;
+  font-weight: 200;
+  cursor: pointer;
+}
+
+.lead {
+  font-size: 24px!important;
+  font-weight: 200!important;
+}
+
+.email-label {
+  font-weight: 700!important;
+}
+
+#email {
+  width: 58.33%;
+}
+
+.card-wrapper .field {
+  color: #495057;
+  background-color: #fff;
+  border-radius: .25rem;
+  clear: both;
+}
 
 /*
  * Footer
