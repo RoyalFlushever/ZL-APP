@@ -359,6 +359,7 @@
          <script type="text/javascript">
             // Create a Stripe client.
           var stripe = Stripe('pk_test_qJbYadi6trFs3qkd6oiH5sm9');
+          var stripe = Stripe('<%= Rails.configuration.stripe[:publishable_key] %>');
 
           // Create an instance of Elements.
           var elements = stripe.elements();
