@@ -338,31 +338,49 @@
         </div>
       </div>
       <!-- Multi Step Form -->
+
       <div class="form-container text-center">
-        <div class="payment-step">
-          <form action="/charges" method="post" id="payment-form">
-             <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-            <div class="form-row">
-              <label for="card-element">
-                Credit or debit card
-              </label>
-              <div id="card-element">
-                <!-- A Stripe Element will be inserted here. -->
-              </div>
-
-              <!-- Used to display form errors. -->
-              <div id="card-errors" role="alert"></div>
+          
+          <div class="payment-step">
+            <div class="heading px-5 py-2 border-top">
+              <h2>Last step ...</h1>
             </div>
+            <div class="content container p-3 mb-3">
+              <div class="to-amazon mx-5 px-2">
+                <h4 class="mb-2">Complete &amp; access</h4>
+              </div>
+              <div class="card-wrapper">
+                <form action="/charges" method="post" id="payment-form">
+                  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+                  <div class="fieldset">
+                    <input id="email" data-tid="elements_examples.form.email_label" type="email" placeholder="Email" required=""></input>  
+                  </div>
+                  <div class="fieldset">
+                    <div id="card-number" class="field empty"></div>
+                    <div id="card-expiry" class="field empty third-width"></div>
+                    <input id="name-on-card" data-tid="elements_examples.form.name_label" class="field" type="text" placeholder="Name" required="">
+                    <div id="card-cvc" class="field empty third-width"></div>
+                  </div>
+                  <!-- Used to display form errors. -->
+                  <div id="card-errors" role="alert"></div>
+                  <button type="submit" data-tid="elements_examples.form.pay_button">Pay $15</button>
+                </form>
+              </div>
+            </div>
+          </div>
 
-            <button>Submit Payment</button>
-          </form>
-         <script type="text/javascript">
+          <script type="text/javascript">
             // Create a Stripe client.
-          var stripe = Stripe('pk_test_qJbYadi6trFs3qkd6oiH5sm9');
           var stripe = Stripe('<%= Rails.configuration.stripe[:publishable_key] %>');
 
           // Create an instance of Elements.
-          var elements = stripe.elements();
+          var elements = stripe.elements({
+            fonts: [
+              {
+                cssSrc: 'https://fonts.googleapis.com/css?family=Roboto',
+              },
+            ]
+          });
 
           // Custom styling can be passed to options when creating an Element.
           // (Note that this demo uses a wider set of styles than the guide below.)
@@ -384,43 +402,110 @@
           };
 
           // Create an instance of the card Element.
-          var card = elements.create('card', {style: style});
+          // var card = elements.create('card', {style: style});
+
+          var cardNumber = elements.create('cardNumber', {style:style});
+          cardNumber.mount('#card-number');
+
+          var cardExpiry = elements.create('cardExpiry', {style:style});
+          cardExpiry.mount('#card-expiry');
+
+          var cardCvc = elements.create('cardCvc', {style:style});
+          cardCvc.mount('#card-cvc');
 
           // Add an instance of the card Element into the `card-element` <div>.
-          card.mount('#card-element');
+          // card.mount('#card-element');
+          var form = document.getElementById('payment-form');
+          var name = form.querySelector('#name-on-card');
+          var additionalData = {
+            name: name? name.value : undefined
+          }
 
+          var displayError = document.getElementById('card-errors');
           // Handle real-time validation errors from the card Element.
-          card.addEventListener('change', function(event) {
-            var displayError = document.getElementById('card-errors');
-            if (event.error) {
-              displayError.textContent = event.error.message;
-            } else {
-              displayError.textContent = '';
-            }
+          // card.addEventListener('change', function(event) {
+          //   if (event.error) {
+          //     displayError.textContent = event.error.message;
+          //   } else {
+          //     displayError.textContent = '';
+          //   }
+          // });
+
+          // Listen for errors from each Element, and show error messages
+          var savedErrors = {}
+          var card_elements = [cardNumber, cardExpiry, cardCvc];
+
+          card_elements.forEach(function(card_element, idx) {
+            card_element.on('change', function(event) {
+              if (event.error) {
+                savedErrors[idx] = event.error.message;
+                displayError.textContent = event.error.message;
+              } else {
+                savedErrors[idx] = null;
+                // Loop over the saved errors and find the first one, if any
+                var nextError = Object.keys(savedErrors)
+                  .sort()
+                  .reduce(function(maybeFoundError, key) {
+                    return maybeFoundError || savedErrors[key];
+                  }, null);
+
+                if (nextError) {
+                  // Now that they've fixed the current error, show another one.
+                  displayError.textContent = nextError;
+                } else {
+                  // The user fixed the last error; no more errors.
+                }
+              }
+            });
           });
 
           // Handle form submission.
+          // var form = document.getElementById('payment-form');
+          // form.addEventListener('submit', function(event) {
+          //   event.preventDefault();
+
+          //   stripe.createToken(card).then(function(result) {
+          //     if (result.error) {
+          //       // Inform the user if there was an error.
+          //       var errorElement = document.getElementById('card-errors');
+          //       errorElement.textContent = result.error.message;
+          //     }else {
+          //       // Send the token to your server
+          //       alert(JSON.stringify(result.token));
+          //       console.log(JSON.stringify(result.token));
+
+          //       // Insert the token ID into the form so it gets submitted to the server
+
+          //       var form = document.getElementById('payment-form');
+          //       var hiddenInput = document.createElement('input');
+          //       hiddenInput.setAttribute('type', 'hidden');
+          //       hiddenInput.setAttribute('name', 'stripeToken');
+          //       hiddenInput.setAttribute('value', result.token.id);
+          //       form.appendChild(hiddenInput);
+          //       alert(result.token.id);
+          //       alert('submitting form');
+          //       // Submit the form
+          //       form.submit();
+          //     }
+          //   });
+          // });
+
+          // Handle form submission. including email
           var form = document.getElementById('payment-form');
-          form.addEventListener('submit', function(event) {
+          form.addEventListener('submit', function(event){
             event.preventDefault();
 
-            stripe.createToken(card).then(function(result) {
+            stripe.createToken(card_elements[0], additionalData).then(function(result){
               if (result.error) {
-                // Inform the user if there was an error.
-                var errorElement = document.getElementById('card-errors');
-                errorElement.textContent = result.error.message;
-              }else {
-                // Send the token to your server
-                alert(JSON.stringify(result.token));
-                console.log(JSON.stringify(result.token));
-
+                displayError.textContent = result.error.message;
+              } else {
                 // Insert the token ID into the form so it gets submitted to the server
-
                 var form = document.getElementById('payment-form');
                 var hiddenInput = document.createElement('input');
                 hiddenInput.setAttribute('type', 'hidden');
                 hiddenInput.setAttribute('name', 'stripeToken');
                 hiddenInput.setAttribute('value', result.token.id);
+
                 form.appendChild(hiddenInput);
                 alert(result.token.id);
                 alert('submitting form');
