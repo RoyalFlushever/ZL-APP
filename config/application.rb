@@ -41,6 +41,8 @@ module Zlapp
                                  'upload.js',
                                  'companies.js',
                                  'progress.js',
+                                 'result.js',
+                                 'charges.js'
                                ]
   end
 end

@@ -24,41 +24,58 @@ class CallApiJob < ActiveJob::Base
     data_hash = JSON.parse(file)
   	i = 0
     ten_prod_arr = []
-  	# create result product json file
-  	
+  	# create result product array
+  	products = [] # :msku, :name, :price, :days, :ltsf, :price, :tradein, :cash
 
-    data_hash.each do | listing_item |
-    	@percent += 1
-    	sleep(3.0/4.0)
-    	product = Product.new
-
-    	# from the inventory file
-    	product.msku = listing_item['sellerSku']
-			product.name = listing_item['name']
-			product.price = listing_item['price']
-			product.days = (Time.now - DateTime.parse(listing_item['opendate'])) / (3600 * 24)
+    data_hash.length.times.map { |index|  
+    	
     	# get every 10 items for a request.
     	ten_prod_arr = [] if i == 0 # the begining of the 10 items per request
-    	ten_prod_arr << listing_item["asin1"]
+    	ten_prod_arr << data_hash[index]["asin1"]
 			i += 1
+			# puts @percent
 			
-			if i == 10
+			if i == 10 or data_hash[index].equal? data_hash.last # every 10 calls
 				i = 0
-				paapi_call_test ten_prod_arr
-				buybackapi_call_test ten_prod_arr
-			
-			elsif listing_item.equal? data_hash.last
-				# detect the last element
-				paapi_call_test ten_prod_arr 
-				
-				# buyback value API
-				# need ISBN validation
-				# typheous 10 buyback value API at a time
-				buybackapi_call_test ten_prod_arr
+				# paapi_call_test ten_prod_arr
+				responses_cash = buybackapi_call_test ten_prod_arr
+								
+				ten_prod_arr.length.times.map { | i |
+					puts data_hash[index - ten_prod_arr.length + i + 1]['asin1']
+					response_buyback = JSON.parse(responses_cash[i])
+					puts response_buyback["asin"]
+					product = Product.new	
+					# from the inventory file
+		    	product.msku = data_hash[index - 10 + i + 1]['sellerSku']
+					product.name = data_hash[index -10 + i + 1]['item-name']
+					product.price = data_hash[index -10 +i + 1]['price']
+					product.days = (Time.now - DateTime.parse(data_hash[index - 10 + i + 1]['opendate'])) / (3600 * 24)
+					if response_buyback["top_offer"].nil?
+						product.cash = 0
+						product.top_vendor = ''
+					else
+						product.cash = response_buyback["top_offer"]["price"] / 100.00
+						product.top_vendor = response_buyback["top_offer"]["vendor_name"]
+					end
+					@buyback_total += product.cash
+					products << product
+				}
+
+				@percent = (index + 1) * 100 / data_hash.length 
+				puts @percent
+				puts index
+				@progress_bar.update_attributes!({
+																					buyback: @buyback_total, 
+																					percent: @percent
+																				})	
 			else	
-				puts i
-			end	
-		end
+				# puts i
+			end
+		}
+		# save to public/result/#{filename}
+		File.open("public/result/#{filename}", "w") do |file|
+      file.write(products.to_json)
+    end
   end
 
   def buybackapi_call_test ten_prod_arr
@@ -76,10 +93,6 @@ class CallApiJob < ActiveJob::Base
 		responses = requests.map { |request|
 		  request.response.body
 		}
-
-		responses.each do |response|
-			puts response
-		end
   end
 
   def buybackapi_call

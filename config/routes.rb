@@ -1,8 +1,12 @@
 Rails.application.routes.draw do
+
+  resources :charges, only: [:new, :create]
+
   resources :companies do
   	collection { post :import }
   end 	
 
+  get 'result_show', to: 'result#show'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root 'index#index'
@@ -12,7 +16,6 @@ Rails.application.routes.draw do
   # progress
   get 'start', to: 'progress#start'
 
-  get 'parse', to: 'liqnet#parse'
   get 'upload', to: 'upload#index'
 
   # upload handler
