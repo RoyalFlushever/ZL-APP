@@ -24,7 +24,6 @@ module Zlapp
     # precompile vendor assets
     config.assets.precompile += %w( base.js )
     config.assets.precompile += %w( base.css )
-    config.assets.precompile += %w( stripe_global.js )
     # precompile themes
     config.assets.precompile += [
       'wraith/themes/theme-a.css',

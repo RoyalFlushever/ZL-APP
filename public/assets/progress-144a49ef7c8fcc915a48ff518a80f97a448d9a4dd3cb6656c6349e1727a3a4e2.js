@@ -1,20 +1,9 @@
-
-(function(window, document, $, undefined){
-
-  if ( !$.fn.dataTable ) return;
-  alert('charge');
-
-  $(function(){
-    //
-    // Initial DataTable
-    //
-    $('#datatable-charge').dataTable({
+$('#datatable1').dataTable({
       'paging':   true,  // Table pagination
       'ordering': true,  // Column ordering
       'info':     true,  // Bottom left status text
       'responsive': true, // https://datatables.net/extensions/responsive/examples/
       'pageLength': 10,
-      
       // Text translation options
       // Note the required keywords between underscores (e.g _MENU_)
       oLanguage: {
@@ -35,7 +24,9 @@
       {extend: 'pdf',   className: 'btn-sm', title: $('title').text() },
       {extend: 'print', className: 'btn-sm' }
       ]
-    });
+});
 
-
-  })(window, document, window.jQuery);
+(function() {
+  var progressBar = new ProgressBar("#demo", "<%= progress_bar_path @progress_bar %>");
+  progressBar.start();
+})();
