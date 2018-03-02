@@ -49,7 +49,9 @@ class CallApiJob < ActiveJob::Base
 		    	product.msku = data_hash[index - 10 + i + 1]['sellerSku']
 					product.name = data_hash[index -10 + i + 1]['item-name']
 					product.price = data_hash[index -10 +i + 1]['price']
-					product.days = (Time.now - DateTime.parse(data_hash[index - 10 + i + 1]['opendate'])) / (3600 * 24)
+					days = (Time.now - DateTime.parse(data_hash[index - 10 + i + 1]['opendate'])) / (3600 * 24)
+					product.days = days.ceil
+					product.ltsf = days > 90 ? true : false
 					if response_buyback["top_offer"].nil?
 						product.cash = 0
 						product.top_vendor = ''
@@ -58,7 +60,11 @@ class CallApiJob < ActiveJob::Base
 						product.top_vendor = response_buyback["top_offer"]["vendor_name"]
 					end
 					@buyback_total += product.cash
-					products << product
+					# add product to the result data if buyback or tradein value
+					if product.cash != 0
+						products << product
+					else
+					end
 				}
 
 				@percent = (index + 1) * 100 / data_hash.length 

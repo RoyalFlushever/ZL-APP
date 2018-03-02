@@ -24,7 +24,6 @@ class UploadController < ApplicationController
 			respond_to do |format|
 		    result = { redirect_url: start_url, filename: file_name }
 		    format.json  { render :json => result } # don't do msg.to_json
-
 		  end
 
 		end

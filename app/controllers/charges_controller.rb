@@ -26,9 +26,8 @@ class ChargesController < ApplicationController
   end
 
   private
-
     def amount_to_be_charged
-      @amount = 1200
+      @amount = 1334
     end
 
     def set_description
