@@ -38,12 +38,14 @@ class CallApiJob < ActiveJob::Base
 			if i == 10 or data_hash[index].equal? data_hash.last # every 10 calls
 				i = 0
 				# paapi_call_test ten_prod_arr
+				paapi_call ten_prod_arr
+				sleep(10)
 				responses_cash = buybackapi_call_test ten_prod_arr
 								
 				ten_prod_arr.length.times.map { | i |
-					puts data_hash[index - ten_prod_arr.length + i + 1]['asin1']
+					# puts data_hash[index - ten_prod_arr.length + i + 1]['asin1']
 					response_buyback = JSON.parse(responses_cash[i])
-					puts response_buyback["asin"]
+					# puts response_buyback["asin"]
 					product = Product.new	
 					# from the inventory file
 		    	product.msku = data_hash[index - 10 + i + 1]['sellerSku']
@@ -68,8 +70,6 @@ class CallApiJob < ActiveJob::Base
 				}
 
 				@percent = (index + 1) * 100 / data_hash.length 
-				puts @percent
-				puts index
 				@progress_bar.update_attributes!({
 																					buyback: @buyback_total, 
 																					percent: @percent
@@ -119,6 +119,12 @@ class CallApiJob < ActiveJob::Base
 		  associate_tag: 'vintagevideog-20'
 		)
 
+		# request.configure(
+		#   aws_access_key_id: 'AKIAIF26BH2GPD4XUI4A',
+		#   aws_secret_access_key: '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',
+		#   associate_tag: 'rajavarman002-20'
+		# )
+
 		# make 10 asin concatenate
 		asin_concact = ten_prod_arr.join(",")
 
@@ -130,9 +136,10 @@ class CallApiJob < ActiveJob::Base
 		}
 
 		begin
-			response = request.item_lookup(query: query, persistent: true)
+			response = request.item_lookup(query: query)
+			puts response.status
 			# Return up to 20 offers in an array.
-			batches = res.dig('ItemLookupResponse', 'Items')
+			batches = response.dig('ItemLookupResponse', 'Items')
 			puts batches
 			# case response.status
 			# 	when 200

@@ -4,6 +4,7 @@ class ChargesController < ApplicationController
 	before_action :set_description
 
   def new
+    @filename = params[:filename]
   end
 
   def create

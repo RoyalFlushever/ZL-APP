@@ -28,3 +28,4 @@
 .env
 
 /public/inventory
+/public/result

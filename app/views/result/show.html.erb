@@ -44,7 +44,7 @@
     <section>
       <!-- Page content-->
       <div class="content-wrapper">
-        <h3>Data Tables
+        <h3>Result Tables
           <small>Tables, one step forward.</small>
         </h3>
         <div class="container-fluid">
@@ -52,8 +52,36 @@
           <div class="row">
             <div class="col-lg-12">
               <div class="panel panel-default">
-                <div class="panel-heading">Data Tables |
-                  <small>Amazon Inventory</small>
+                <div class="panel-heading">
+                  <div class="value-section">
+                    <div class="result-value">
+                      <h3>Total</h3>
+                      <span id="total" class="popspan">$1056</span>
+                    </div>
+                    <div class="result-value">
+                      <h3>Trade-in</h3> 
+                      <span id="tradein" class="popspan">$975</span>
+                    </div>
+                    <div class="result-value">
+                      <h3>Buy Back</h3>
+                      <span id="buyback" class="popspan">$756</span>
+                    </div>
+                  </div>
+                  <div class="show-option">
+                    <div class="styled-select semi-square">
+                      <select name="value-option" >
+                        <option value="all">Show All</option>
+                        <option value="buyback">Buy Back</option>
+                        <option value="tradein">Trade-in</option>
+                      </select>
+                    </div>
+                    <div class="styled-select semi-square">
+                      <select name="ltsf-option"> 
+                        <option value="all">Show All</option>
+                        <option value="ltfsonly">LTSF only</option>
+                      </select>
+                    </div>
+                  </div>
                 </div>
                 <div class="panel-body">
                   <div class="table-responsive">
@@ -61,28 +89,28 @@
                       <thead>
                         <tr>
                           <th style="width:80px;">
-                            <strong>ID</strong>
+                            <strong>MSKU</strong>
                           </th>
                           <th>
-                            <strong>NAME</strong>
+                            <strong>PRODUCT NAME</strong>
                           </th>
                           <th>
-                            <strong>DESCRIPTION</strong>
+                            <strong>RANK</strong>
+                          </th>
+                          <th style="width:80px;">
+                            <strong>DAYS</strong>
+                          </th>
+                          <th class="text-center">
+                            <strong>LTSF</strong>
                           </th>
                           <th>
                             <strong>PRICE</strong>
                           </th>
-                          <th style="width:80px;">
-                            <strong>QUANTITY</strong>
-                          </th>
-                          <th class="text-center">
-                            <strong>STATUS</strong>
-                          </th>
                           <th>
-                            <strong>ADDED</strong>
+                            <strong>TRADE</strong>
                           </th>
                           <th class="text-center">
-                            <strong>VIEW</strong>
+                            <strong>CASH</strong>
                           </th>
                         </tr>
                       </thead>

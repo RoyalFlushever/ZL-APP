@@ -5,7 +5,6 @@
   if ( !$.fn.dataTable ) return;
 
   $(function(){
-    //
     // Initial DataTable
     //
     $('#datatable1').dataTable({
@@ -38,7 +37,6 @@
     });
 
     var filename;
-
     // Dropzone option config. myDropzone - id: my-dropzone
     Dropzone.options.myDropzone = {
       uploadMultiple: false,  // only upload one file
@@ -46,7 +44,7 @@
       acceptedFiles: ".csv",  // accept .csv file only 
       dictInvalidFileType: "You can't upload files of this type. Only Accept CSV.",
       success: function(file, result){
-            filename = result.filename;
+        filename = result.filename;
       }             
     }
 
@@ -55,6 +53,7 @@
     var percent = $('.done');
     var message = $('.to-amazon h5');
     var bar = $('.progress-bar');
+
     // update progressbar every pingTime
     var pingTime = 1000
 
@@ -69,7 +68,6 @@
           bar.css('width', percentHtml);
           $('.tradein-value').html(data.tradein);
           $('.buyback-value').html(data.buyback);
-          console.log(percentHtml);
           if ( parseInt(data.percent) < 100 ) {
             message.html(data.message + ": <span class='done'>" + data.percent + "</span> Done");
             setTimeout(ajaxFn, pingTime);
@@ -82,24 +80,17 @@
 
     // multi step handle
     $('.show-profit').click( function( event ){
-      $('.sync-amz').fadeOut('fast', function(){
-        $('.scan-inventory').fadeIn('fast');
-        ajaxFn();
-        $.get('/create', {filename: filename});
-      });
+      if(filename) {
+        $('.sync-amz').fadeOut('fast', function(){
+          $('.scan-inventory').fadeIn('fast');
+          ajaxFn();
+          $.get('/create', {filename: filename});
+        });
+      } else {
+        alert("Choose your inventory file first");
+      }
     });
-  
-    $('.get-access').click( function( event ){
-      $('.scan-inventory').fadeOut('fast', function() {
-        $('.payment-step').fadeIn('fast');
-      });
-    });
-
-    $('.pay-btn').click( function() {
-      $('.payment-step').fadeOut('400');
-      $('.table-wrapper').removeClass('blur-teaser');
-    });
-
+    
   });
 
 })(window, document, window.jQuery);
