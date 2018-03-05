@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   end 	
 
   get 'result_show', to: 'result#show'
+  get 'renderjson' => 'result#renderjson'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root 'index#index'

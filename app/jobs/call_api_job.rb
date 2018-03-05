@@ -37,19 +37,24 @@ class CallApiJob < ActiveJob::Base
 
 			if !item['ItemAttributes']['ISBN'].nil?
 				isbn = item['ItemAttributes']['ISBN']
+
 			elsif !item['ItemAttributes']['EISBN'].nil?
 				isbn = item['ItemAttributes']['EISBN']
+
 			else
 				isbn = ''
+
 			end
 			
 			# TradeIn
 			if item['ItemAttributes'].has_key? "TradeInValue"
 				tradein_string = item['ItemAttributes']['TradeInValue']['Amount']
 				trade_in = tradein_string.to_f / 100
-			else
+			
+      else
 				trade_in = 0	
-			end
+			
+      end
 
 			product.tradeinurl = resource_url
 			product.rank = sales_rank
