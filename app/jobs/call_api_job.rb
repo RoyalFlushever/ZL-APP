@@ -28,101 +28,102 @@ class CallApiJob < ActiveJob::Base
   	products = [] # :msku, :name, :price, :days, :ltsf, :price, :tradein, :cash
   	# valid_ten_asins = asin_validation_test
   	# p valid_ten_asins
-		items = paapi_call_test
-		items.each do |item|
-			product = Product.new
-			asin = item['ASIN']
-			resource_url = item['DetailPageURL']
-			sales_rank = item['SalesRank'].nil? ? 'no rank' : item['SalesRank']
+		# items = paapi_call_test
+		# items.each do |item|
+		# 	product = Product.new
+		# 	asin = item['ASIN']
+		# 	resource_url = item['DetailPageURL']
+		# 	sales_rank = item['SalesRank'].nil? ? 'no rank' : item['SalesRank']
 
-			if !item['ItemAttributes']['ISBN'].nil?
-				isbn = item['ItemAttributes']['ISBN']
+		# 	if !item['ItemAttributes']['ISBN'].nil?
+		# 		isbn = item['ItemAttributes']['ISBN']
 
-			elsif !item['ItemAttributes']['EISBN'].nil?
-				isbn = item['ItemAttributes']['EISBN']
+		# 	elsif !item['ItemAttributes']['EISBN'].nil?
+		# 		isbn = item['ItemAttributes']['EISBN']
 
-			else
-				isbn = ''
+		# 	else
+		# 		isbn = ''
 
-			end
+		# 	end
 			
-			# TradeIn
-			if item['ItemAttributes'].has_key? "TradeInValue"
-				tradein_string = item['ItemAttributes']['TradeInValue']['Amount']
-				trade_in = tradein_string.to_f / 100
+		# 	# TradeIn
+		# 	if item['ItemAttributes'].has_key? "TradeInValue"
+		# 		tradein_string = item['ItemAttributes']['TradeInValue']['Amount']
+		# 		trade_in = tradein_string.to_f / 100
 			
-      else
-				trade_in = 0	
+  #     else
+		# 		trade_in = 0	
 			
-      end
+  #     end
 
-			product.tradeinurl = resource_url
-			product.rank = sales_rank
-			product.tradein = trade_in
+		# 	product.tradeinurl = resource_url
+		# 	product.rank = sales_rank
+		# 	product.tradein = trade_in
 
-			products << product
-		end
+		# 	products << product
+		# end
 
-		File.open("public/result/#{filename}", "w") do |file|
-      file.write(products.to_json)
-    end
-
-   #  data_hash.length.times.map { |index|  
-    	
-   #  	# get every 10 items for a request.
-   #  	ten_prod_arr = [] if i == 0 # the begining of the 10 items per request
-   #  	ten_prod_arr << data_hash[index]["asin1"]
-			# i += 1
-			# # puts @percent
-			
-			# if i == 10 or data_hash[index].equal? data_hash.last # every 10 calls
-			# 	p i
-			# 	i = 0
-			# 	# paapi_call_test ten_prod_arr
-			# 	paapi_call_test ten_prod_arr
-			# 	# sleep(10)
-			# 	# responses_cash = buybackapi_call_test ten_prod_arr
-								
-			# 	# ten_prod_arr.length.times.map { | i |
-			# 	# 	# puts data_hash[index - ten_prod_arr.length + i + 1]['asin1']
-			# 	# 	response_buyback = JSON.parse(responses_cash[i])
-			# 	# 	# puts response_buyback["asin"]
-			# 	# 	product = Product.new	
-			# 	# 	# from the inventory file
-		 #  #   	product.msku = data_hash[index - 10 + i + 1]['sellerSku']
-			# 	# 	product.name = data_hash[index -10 + i + 1]['item-name']
-			# 	# 	product.price = data_hash[index -10 +i + 1]['price']
-			# 	# 	days = (Time.now - DateTime.parse(data_hash[index - 10 + i + 1]['opendate'])) / (3600 * 24)
-			# 	# 	product.days = days.ceil
-			# 	# 	product.ltsf = days > 90 ? true : false
-			# 	# 	if response_buyback["top_offer"].nil?
-			# 	# 		product.cash = 0
-			# 	# 		product.top_vendor = ''
-			# 	# 	else
-			# 	# 		product.cash = response_buyback["top_offer"]["price"] / 100.00
-			# 	# 		product.top_vendor = response_buyback["top_offer"]["vendor_name"]
-			# 	# 	end
-			# 	# 	@buyback_total += product.cash
-			# 	# 	# add product to the result data if buyback or tradein value
-			# 	# 	if product.cash != 0
-			# 	# 		products << product
-			# 	# 	else
-			# 	# 	end
-			# 	# }
-
-			# 	# @percent = (index + 1) * 100 / data_hash.length 
-			# 	# @progress_bar.update_attributes!({
-			# 	# 																	buyback: @buyback_total, 
-			# 	# 																	percent: @percent
-			# 	# 																})	
-			# else	
-			# 	# puts i
-			# end
-		# }
-		# save to public/result/#{filename}
 		# File.open("public/result/#{filename}", "w") do |file|
   #     file.write(products.to_json)
   #   end
+
+    data_hash.length.times.map { |index|  
+    	
+    	# get every 10 items for a request.
+    	ten_prod_arr = [] if i == 0 # the begining of the 10 items per request
+    	ten_prod_arr << data_hash[index]["asin1"]
+			i += 1
+			# puts @percent
+			
+			if i == 20 or data_hash[index].equal? data_hash.last # every 10 calls
+				p i
+				i = 0
+        valid_asins = asin_validation_test ten_prod_arr
+				# paapi_call_test ten_prod_arr
+        paapi_call valid_asins
+				sleep(10)
+				responses_cash = buybackapi_call_test ten_prod_arr
+								
+				ten_prod_arr.length.times.map { | i |
+					# puts data_hash[index - ten_prod_arr.length + i + 1]['asin1']
+					response_buyback = JSON.parse(responses_cash[i])
+					# puts response_buyback["asin"]
+					product = Product.new	
+					# from the inventory file
+		    	product.msku = data_hash[index - 20 + i + 1]['sellerSku']
+					product.name = data_hash[index -20 + i + 1]['item-name']
+					product.price = data_hash[index -20 +i + 1]['price']
+					days = (Time.now - DateTime.parse(data_hash[index - 20 + i + 1]['opendate'])) / (3600 * 24)
+					product.days = days.ceil
+					product.ltsf = days > 90 ? true : false
+					if response_buyback["top_offer"].nil?
+						product.cash = 0
+						product.top_vendor = ''
+					else
+						product.cash = response_buyback["top_offer"]["price"] / 100.00
+						product.top_vendor = response_buyback["top_offer"]["vendor_name"]
+					end
+					@buyback_total += product.cash
+					# add product to the result data if buyback or tradein value
+					if product.cash != 0
+						products << product
+					else
+					end
+				}
+
+				@percent = (index + 1) * 100 / data_hash.length 
+				@progress_bar.update_attributes!({
+																					buyback: @buyback_total, 
+																					percent: @percent
+																				})	
+			else	
+				# puts i
+			end
+		}
+		# save to public/result/#{filename}
+		File.open("public/result/#{filename}", "w") do |file|
+      file.write(products.to_json)
+    end
   end
 
   def buybackapi_call_test ten_prod_arr
@@ -817,8 +818,7 @@ class CallApiJob < ActiveJob::Base
 		
 	end
 
-	def asin_validation_test
-		ten_asins = ["898753740", "932963099", "985751665", "1453596216", "158648642X", "1626390851", "1908968044", "B0006Y8CEG", "B0000CKZ0S"]
+	def asin_validation_test ten_asins
 		valid_asins = []
 		valid_asin_regex = /\A[0-9,A-Z]{10}\z/
 
@@ -838,30 +838,50 @@ class CallApiJob < ActiveJob::Base
 		return valid_asins
 	end
 
+  def asins_test ten_prod_arr
+    asin_length = ten_prod_arr.length
+    if asin_length > 10 
+      asins_1 = ten_prod_arr[0..9].join(',')
+      asins_2 = ten_prod_arr[10..-1].join(',')
+    else
+      asins_1 = ten_prod_arr.join(',')
+      asins_2 = ''
+    end
+    p asins_1
+    p asins_2
+  end
+
 	def paapi_call ten_prod_arr
 		# use vacuum gem
     request = Vacuum.new
-    request.configure(
-		  aws_access_key_id: 'AKIAIM5CZH6OERDFHP3Q',
-		  aws_secret_access_key: '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',
-		  associate_tag: 'vintagevideog-20'
+   
+		request.configure(
+		  aws_access_key_id: 'AKIAIOXYKUVGX7Q44KXQ',
+		  aws_secret_access_key: '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',
+		  associate_tag: 'bharathvasan9-20 '
 		)
 
-		# request.configure(
-		#   aws_access_key_id: 'AKIAIF26BH2GPD4XUI4A',
-		#   aws_secret_access_key: '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',
-		#   associate_tag: 'rajavarman002-20'
-		# )
-
 		# make 10 asin concatenate
-		asin_concact = ten_prod_arr.join(",")
+    asin_length = ten_prod_arr.length
+    if asin_length > 10 
+      asins_1 = ten_prod_arr[0..9].join(',')
+      asins_2 = ten_prod_arr[10..-1].join(',')
+    else
+      asins_1 = ten_prod_arr.join(',')
+      asins_2 = ''
+    end
+		# query = {
+		# 	'ItemId' => asin_concact,
+		# 	'SearchIndex' => 'All',
+		# 	'ResponseGroup' => 'ItemAttributes, SalesRank',
+		# 	'IdType' => 'ISBN'
+		# }
 
-		query = {
-			'ItemId' => asin_concact,
-			'SearchIndex' => 'All',
-			'ResponseGroup' => 'ItemAttributes, SalesRank',
-			'IdType' => 'ISBN'
-		}
+    query = {
+    'ItemLookup.1.ItemId': asins_1,# asins
+    'ItemLookup.Shared.ResponseGroup': 'ItemAttributes, SalesRank', # response groups
+    'ItemLookup.2.ItemId': asins_2# asins
+    }
 
 		begin
 			response = request.item_lookup(query: query)
@@ -895,8 +915,8 @@ class CallApiJob < ActiveJob::Base
 			# 	when 503
 			# 		puts "A 503 error means that you are submitting requests too quickly and your requests are being throttled"
 			# end	
-		rescue => e
-			puts e.inspect
+		rescue Excon::Error::ServiceUnavailable
+      nil
     end
 	end
 end
