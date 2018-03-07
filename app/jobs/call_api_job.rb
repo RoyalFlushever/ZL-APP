@@ -189,9 +189,9 @@ class CallApiJob < ActiveJob::Base
     request = Vacuum.new
 		
     request.configure(
-      aws_access_key_id: 'AKIAIOXYKUVGX7Q44KXQ',
-      aws_secret_access_key: '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',
-      associate_tag: 'bharathvasan9-20'
+      aws_access_key_id: '**',
+      aws_secret_access_key: '**',
+      associate_tag: '**'
     )
 
 		# make 10 asin concatenate
