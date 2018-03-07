@@ -45,7 +45,6 @@ $(document).ready(function(){
   
 	$('#value-option').change(function(){
 		value = $( "#value-option option:selected").text();
-		alert(value);
 		if (value == "Buy Back") {
 			table
 				.column(7)
@@ -92,6 +91,4 @@ $(document).ready(function(){
 				.draw();
 		} 
 	});
-
-
 });
