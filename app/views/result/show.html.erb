@@ -56,15 +56,15 @@
                   <div class="value-section">
                     <div class="result-value">
                       <h3>Total</h3>
-                      <span id="total" class="popspan">$1056</span>
+                      <span id="total" class="popspan"><%= number_to_currency(@progress_bar.total) %></span>
                     </div>
                     <div class="result-value">
                       <h3>Trade-in</h3> 
-                      <span id="tradein" class="popspan">$975</span>
+                      <span id="tradein" class="popspan"><%= number_to_currency(@progress_bar.tradein) %></span>
                     </div>
                     <div class="result-value">
                       <h3>Buy Back</h3>
-                      <span id="buyback" class="popspan">$756</span>
+                      <span id="buyback" class="popspan"><%= number_to_currency(@progress_bar.buyback) %></span>
                     </div>
                   </div>
                   <div class="show-option">

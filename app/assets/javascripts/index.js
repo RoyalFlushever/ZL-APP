@@ -66,8 +66,11 @@
         success: function (data) {
           var percentHtml = data.percent + "%";
           bar.css('width', percentHtml);
+
           $('.tradein-value').html(data.tradein);
           $('.buyback-value').html(data.buyback);
+          $('.profit').html(data.profit);
+
           if ( parseInt(data.percent) < 100 ) {
             message.html(data.message + ": <span class='done'>" + data.percent + "</span> Done");
             setTimeout(ajaxFn, pingTime);

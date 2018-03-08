@@ -13,6 +13,7 @@ class CallApiJob < ActiveJob::Base
     @status = 1
     @tradein_total = 0
     @buyback_total = 0
+    @total = 0
     @profit = 0
  
     # open inventory json file
@@ -114,25 +115,31 @@ class CallApiJob < ActiveJob::Base
           product.tradeinurl = resource_url
           product.rank       = sales_rank
           product.tradein    = trade_in
+
+          total_profit = trade_in > product.cash ? trade_in : product.cash          
           
           @buyback_total     += product.cash
           @tradein_total     += product.tradein
+          @total += total_profit
+          @profit = @total * 0.08
 
           # add product to the result data if buyback or tradein value
           if product.cash != 0
-            products << product
+            products << product 
           else
           end
         }
 
         @percent = (index + 1) * 100 / data_hash.length 
         @progress_bar.update_attributes!({
-                                          buyback: @buyback_total, 
-                                          tradein: @tradein_total,
+                                          buyback: @buyback_total.round(2), 
+                                          tradein: @tradein_total.round(2),
+                                          total: @total,
+                                          profit: @profit.round(2),
                                           percent: @percent
                                         })  
         i = 0
-        sleep(10)
+        sleep(1)
       else  
         # puts i
       end
@@ -187,12 +194,11 @@ class CallApiJob < ActiveJob::Base
 	def paapi_call ten_prod_arr
 		# use vacuum gem
     request = Vacuum.new
-		
-    request.configure(
-      aws_access_key_id: '**',
-      aws_secret_access_key: '**',
-      associate_tag: '**'
-    )
+		request.configure(
+      aws_access_key_id: 'AKIAIOXYKUVGX7Q44KXQ',
+      aws_secret_access_key: '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',
+      associate_tag: 'bharathvasan9-20'
+      )
 
 		# make 10 asin concatenate
     asin_length = ten_prod_arr.length
