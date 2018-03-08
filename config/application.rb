@@ -24,6 +24,7 @@ module Zlapp
     # precompile vendor assets
     config.assets.precompile += %w( base.js )
     config.assets.precompile += %w( base.css )
+    config.assets.precompile += %w( select.dataTables.min.css )
     # precompile themes
     config.assets.precompile += [
       'wraith/themes/theme-a.css',

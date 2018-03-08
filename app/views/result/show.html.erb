@@ -14,10 +14,10 @@
           </button>
           <a class="navbar-brand" href="/">
             <div class="brand-logo">
-              <%= image_tag "z-logo.png", class: "img-responsive" , alt:"App Logo" %>
+              <%= image_tag "z-logo.png", class: "img-responsive" , alt: "App Logo" %>
             </div>
             <div class="brand-logo-collapsed">
-              <%= image_tag "z-logo-single.png", class: "img-responsive", alt:"App Logo" %>
+              <%= image_tag "z-logo-single.png", class: "img-responsive", alt: "App Logo" %>
             </div>
           </a>
         </div>
@@ -112,6 +112,11 @@
                           <th class="text-center">
                             <strong>CASH</strong>
                           </th>
+                          <th></th>
+                          <th></th>
+                          <th class="text-center">
+                            <strong>Mark</strong>
+                          </th>
                         </tr>
                       </thead>
                       <tbody>
@@ -126,3 +131,136 @@
         </div>
       </div>
   </section>
+  <script type="text/javascript">
+    alert('Payment Done');
+
+  var buybacks =[
+                  {"top_vendor":"Sell Back Your Book", "link":"https://www.sellbackyourbook.com"}, 
+                  {"top_vendor":"Textbook Rush", "link":"https://www.textbookrush.com"}
+                ];
+                    
+
+  var table =  $('#result-datatable').DataTable({
+      'paging':   true,  // Table pagination
+      'ordering': true,  // Column ordering
+      'info':     true,  // Bottom left status text
+      'responsive': true, // https://datatables.net/extensions/responsive/examples/
+      "iDisplayLength" : 10,
+      "processing": false,
+      "serverSide": false,
+      "scrollX": true,
+      sAjaxSource: "/renderjson" + "?filename=" + "<%= @file_name %>",      
+      aoColumns: [
+        { mData: 'msku' },
+        { mData: 'name' },
+        { mData: 'rank' },
+        { mData: 'days' },
+        { mData: 'ltsf' },
+        { mData: 'price' },
+        { mData: 'tradein' },
+        { mData: 'cash'},
+        { mData: 'top_vendor', visible: false},
+        { mData: 'tradeinurl', visible: false},
+        {
+          data: null,
+          defaultContent: '',
+          className: 'select-checkbox',
+          orderable: false
+        },
+      ],
+      "columnDefs": [ 
+            {
+              "targets": 7,//index of column starting from 0
+              "render": function ( data, type, row, meta ) {
+                  if(data != '' && data != null)
+                    return "<a href=\"" + row.top_vendor + "\"> " + data + "</a>";
+                  else
+                    return 'No Offer';
+              }
+            },
+            {
+              "targets": 6,//index of column starting from 0
+              "render": function ( data, type, row, meta ) {
+                  if(data != '' && data != null)
+                    return "<a href=\"" + row.tradeinurl + "\"> " + data + "</a>";
+                  else
+                    return 'No Offer';
+              }
+            } 
+        ],
+      // Text translation options
+      // Note the required keywords between underscores (e.g _MENU_)
+      oLanguage: {
+        sSearch:      'Search all columns:',
+        sLengthMenu:  '_MENU_',
+        info:         'Showing page _PAGE_ of _PAGES_',
+        zeroRecords:  'Nothing found - sorry',
+        infoEmpty:    'No records available',
+        infoFiltered: '(filtered from _MAX_ total records)',
+        pageLength: '10'
+      },
+      // Datatable Buttons setup
+      dom: '<"html5buttons"B>lTfgitp',
+      select: {
+        style:    'multi',
+        selector: 'td:last-child'
+      },
+      buttons: [
+      {extend: 'csv',   className: 'btn-sm' },
+      {extend: 'excel', className: 'btn-sm', title: 'XLS-File'},
+      {extend: 'pdf',   className: 'btn-sm', title: $('title').text() },
+      ]
+    });
+
+
+  var value_regex =     "^(0*[1-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[1-9][0-9]*)$";
+  
+  $('#value-option').change(function(){
+    value = $( "#value-option option:selected").text();
+    if (value == "Buy Back") {
+      table
+        .column(7)
+        .search(value_regex, true)
+        .draw();
+      table
+        .column(6)
+        .search("")
+        .draw();
+    } else if(value == "Trade-in") {
+      table
+        .column(6)
+        .search(value_regex, true)
+        .draw();
+      table
+        .column(7)
+        .search("")
+        .draw();
+    } else {
+      table
+        .column(6)
+        .search("")
+        .draw();
+      table
+      .column(7)
+      .search("")
+      .draw();
+    } 
+  });
+
+  $('#ltsf-option').change(function() {
+    value = $( "#ltsf-option option:selected").text();
+    if (value == "Show All") {
+      value = "";
+      table
+        .column(4)
+        .search(value)
+        .draw();
+    } else {
+      value = "true";
+      table
+        .column(4)
+        .search(value)
+        .draw();
+    } 
+  });
+  </script>

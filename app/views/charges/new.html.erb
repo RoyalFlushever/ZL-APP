@@ -353,6 +353,7 @@
                 <form action="/charges" method="post" id="payment-form">
                   <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
                   <%= hidden_field_tag 'filename', @filename %>
+                  <%= hidden_field_tag 'amount', @amount %>
                   <div class="fieldset row">
                     <div class="form-group">
                       <label for="email" class="email-label control-label col-sm-5">Email address:</label>
@@ -381,7 +382,7 @@
                   </div>
                   <!-- Used to display form errors. -->
                   <div id="card-errors" role="alert"></div>
-                  <button type="submit" data-tid="elements_examples.form.pay_button"><span class="lead">Pay $15</span><br> (Show $100 instant profit opportunity)</button>
+                  <button type="submit" data-tid="elements_examples.form.pay_button"><span class="lead">Pay $<%= @amount %></span><br> (Show $100 instant profit opportunity)</button>
                 </form>
               </div>
             </div>

@@ -5,19 +5,22 @@ class ChargesController < ApplicationController
 
   def new
     @filename = params[:filename]
+    @amount = Progressbar.where(taskname: @filename).first.profit
   end
 
   def create
+    @filename = params[:filename]
+    @amount   = Progressbar.where(taskname: @filename).first.profit
   	customer = StripeTool.create_customer(
         email: params[:stripeEmail],
         stripe_token: params[:stripeToken])
 
     charge = StripeTool.create_charge(
       customer_id: customer.id,
-      amount: @amount,
+      # amount: (@amount * 100).to_i,
       description: @description)
 
-    redirect_to result_show_path
+    redirect_to result_show_path @filename
 
   rescue Stripe::CardError => e
     puts 'error message'
@@ -28,7 +31,7 @@ class ChargesController < ApplicationController
 
   private
     def amount_to_be_charged
-      @amount = 1334
+
     end
 
     def set_description

@@ -29,6 +29,7 @@
 //= require datatables/media/js/jquery.dataTables.min
 //= require datatables-colvis/js/dataTables.colVis
 //= require datatables/media/js/dataTables.bootstrap
+//= require datatables/media/js/dataTables.select.min
 
 //--- Datatables Buttons
 //= require datatables-buttons/js/dataTables.buttons

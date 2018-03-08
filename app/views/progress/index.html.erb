@@ -348,25 +348,26 @@
           </div>
           <div class="content container p-3 mb-3">
             <div class="to-amazon mt-3">
-              <h5 class="mb-2">Calculating Instant profits: <span class="done"> 37</span> Done</h5>
+              <h5 class="mb-2">Calculating Instant profits: <span class="done">0</span> Done</h5>
             </div>
             <div class="mx-5 mt-3 mb-5 px-2">
-              <div class="progress" style="height:30px">
-                <div class="progress-bar" style="width:37%; height:30px"></div>
+              <div id="scan-progress">
+                <div class="progress" style="height:30px">
+                  <div class="progress-bar" style="width:0%; height:30px"></div>
+                </div>
               </div>
             </div>
             <div class="to-next text-center">
               <div class="trade-in clearfix mx-auto mb-3">
-                <h4 class="pull-left mt-1">Instant Trade-In: </h4> <span class="tradein-value value pull-right mb-2">1056</span>
+                <h4 class="pull-left mt-1">Instant Trade-In: </h4> <span class="tradein-value value pull-right mb-2">@</span>
               </div>
               <div class="buyback clearfix mx-auto mb-5">
-                <h4 class="pull-left mt-1">Instant Cash Buy Back: </h4> <span class="buyback-value value pull-right mb-2">755</span>
+                <h4 class="pull-left mt-1">Instant Cash Buy Back: </h4><span class="buyback-value value pull-right mb-2">0</span>
               </div>
+              <%= link_to "Yes! <br/> Get access for $<span class='profit'></span>".html_safe, new_charge_path(), class:"btn btn-success get-access px-3 mt-3" %>
             </div>
-            <a href="" class="btn btn-success get-access px-3 mt-3">Yes! <br/> Get access for $158.40</a>
           </div>
-        </div>
-        
+        </div>        
       </div>
     </div>
   </section>

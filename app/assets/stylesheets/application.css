@@ -9,6 +9,7 @@
  *
  * --- Assets paths redefinition 
  * 
+ *= require select.dataTables.min
  *= require fonts
  *= require vendor.assets
  *= require multistepform

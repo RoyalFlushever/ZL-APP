@@ -21,7 +21,6 @@ class ResultController < ApplicationController
 
 		def set_filename
 			@file_name = params[:filename]
-			@file_name = '201837224439_inventory.json'
 		end
 
 end

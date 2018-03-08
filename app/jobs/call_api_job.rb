@@ -228,4 +228,5 @@ class CallApiJob < ActiveJob::Base
       nil
     end
 	end
+  
 end

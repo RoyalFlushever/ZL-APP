@@ -69,13 +69,18 @@
 
           $('.tradein-value').html(data.tradein);
           $('.buyback-value').html(data.buyback);
-          $('.profit').html(data.profit);
 
           if ( parseInt(data.percent) < 100 ) {
             message.html(data.message + ": <span class='done'>" + data.percent + "</span> Done");
             setTimeout(ajaxFn, pingTime);
           } else {
             message.html("Finished");
+            if (data.profit > 0.5)
+              $('#get-access').html("Yes! <br/> Get access for $<span class='profit'>" + data.profit +"</span>").attr('data-available', 'true');
+            else {
+              $('#get-access').html("Yes! <br/> Get access for free").attr('data-available', 'true');
+              $('#get-access').html("Yes! <br/> Get access for free").attr('data-charge', 'false');
+            }
           }
         }
       });
@@ -92,6 +97,20 @@
       } else {
         alert("Choose your inventory file first");
       }
+    });
+
+    $('#get-access').on('click', function(){
+      if ($(this).attr('data-available') == 'false')
+      {
+        location.href = $(this).attr('data-url2');
+      }else{
+        if ($(this).attr('data-charge') == 'true')
+          next_url = $(this).attr('data-url1') + '?filename=' + filename;   // go to result page if profit > 50 cents
+        else
+          next_url = $(this).attr('data-url3') + '?filename=' + filename;   // go to result page if profit < 50 cents
+        location.href = next_url;
+      }
+
     });
     
   });
