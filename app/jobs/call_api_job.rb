@@ -66,8 +66,15 @@ class CallApiJob < ActiveJob::Base
 
           product = Product.new 
           if !responses_cash[j].nil?
+            # p "not nil" + responses_cash[j]
             p "not nil"
-            response_buyback = JSON.parse(responses_cash[j]) unless responses_cash[j].nil?
+
+            begin
+              response_buyback = JSON.parse(responses_cash[j]) unless responses_cash[j].nil?
+            rescue Exception => e
+              next              
+            end
+
             # from the buyback
             if response_buyback["top_offer"].nil?
               product.cash       = 0
@@ -108,7 +115,14 @@ class CallApiJob < ActiveJob::Base
           product.msku  = data_hash[index - 20 + j + 1]['sellerSku']
           product.name  = data_hash[index -20 + j + 1]['item-name']
           product.price = data_hash[index -20 +j + 1]['price']
-          days          = (Time.now - DateTime.parse(data_hash[index - 20 + j + 1]['opendate'])) / (3600 * 24)
+
+          # DataTime Parse error handle
+          begin
+            days = (Time.now - DateTime.parse(data_hash[index - 20 + j + 1]['opendate'])) / (3600 * 24)
+          rescue Exception => e
+            next
+          end
+
           product.days  = days.ceil
           product.ltsf  = days > 90 ? true : false
 
@@ -124,7 +138,7 @@ class CallApiJob < ActiveJob::Base
           @profit = @total * 0.08
 
           # add product to the result data if buyback or tradein value
-          if product.cash != 0
+          if product.cash > 0 || product.tradein != 0
             products << product 
           else
           end
@@ -213,8 +227,7 @@ class CallApiJob < ActiveJob::Base
     query = {
     'ItemLookup.1.ItemId': asins_1,# asins
     'ItemLookup.Shared.ResponseGroup': 'ItemAttributes, SalesRank', # response groups
-    'ItemLookup.Shared.IdType': 'ISBN',
-    'ItemLookup.Shared.SearchIndex': 'All',
+    'ItemLookup.Shared.IdType': 'ASIN',
     'ItemLookup.2.ItemId': asins_2# asins
     }
 

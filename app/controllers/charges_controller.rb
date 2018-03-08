@@ -17,10 +17,10 @@ class ChargesController < ApplicationController
 
     charge = StripeTool.create_charge(
       customer_id: customer.id,
-      # amount: (@amount * 100).to_i,
+      amount: (@amount * 100).to_i,
       description: @description)
 
-    redirect_to result_show_path @filename
+    redirect_to result_show_path(filename: @filename)
 
   rescue Stripe::CardError => e
     puts 'error message'
