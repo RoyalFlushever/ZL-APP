@@ -81,7 +81,8 @@ class CallApiJob < ActiveJob::Base
               product.top_vendor = ''
             else
               product.cash       = response_buyback["top_offer"]["price"] / 100.00
-              product.top_vendor = response_buyback["top_offer"]["vendor_name"]
+              product.top_vendor = ''
+              product.top_vendor = response_buyback["asin"] if product.cash > 0
             end
             
             # from the AMZ PAAPI
@@ -136,6 +137,9 @@ class CallApiJob < ActiveJob::Base
           @tradein_total     += product.tradein
           @total += total_profit
           @profit = @total * 0.08
+
+          p product.cash
+          p 'top_vendor' + product.top_vendor
 
           # add product to the result data if buyback or tradein value
           if product.cash > 0 || product.tradein != 0

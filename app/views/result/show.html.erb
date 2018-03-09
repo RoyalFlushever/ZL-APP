@@ -134,12 +134,6 @@
   <script type="text/javascript">
     alert('Payment Done');
 
-  var buybacks =[
-                  {"top_vendor":"Sell Back Your Book", "link":"https://www.sellbackyourbook.com"}, 
-                  {"top_vendor":"Textbook Rush", "link":"https://www.textbookrush.com"}
-                ];
-                    
-
   var table =  $('#result-datatable').DataTable({
       'paging':   true,  // Table pagination
       'ordering': true,  // Column ordering
@@ -173,7 +167,7 @@
               "targets": 7,//index of column starting from 0
               "render": function ( data, type, row, meta ) {
                   if(data != '' && data != null) {
-                      return "<a href=\"" + row.top_vendor + "\"> " + data + "</a>";
+                      return "<a href=\"https://www.bookfinder.com/buyback/search/#" + row.top_vendor + "\" target= \"_blank\"> " + data + "</a>";
                   }
                   else
                     return "No Offer";
@@ -184,8 +178,7 @@
               "render": function ( data, type, row, meta ) {
                   if(data != '' && data != null) {
                     if ( type == "display") {
-                      console.log(type);
-                      return "<a href=\"" + row.tradeinurl + "\"> " + data + "</a>";
+                      return "<a href=\"" + row.tradeinurl + "\" target = \"_blank\"> " + data + "</a>";
                     }
                     else 
                       return data;
@@ -197,8 +190,13 @@
             {
               "targets": 4,
               "render": function(data, type, row, meta) {
-                if (data == true)
+                if (data == true) {
+                  if (type == "display") {
                     return "&#9989;" ;
+                  } else {
+                    return true;
+                  }
+                }
                 else 
                   return "&#10080;" ;
               }
@@ -264,21 +262,21 @@
     } 
   });
 
-  // $('#ltsf-option').change(function() {
-  //   value = $( "#ltsf-option option:selected").text();
+  $('#ltsf-option').change(function() {
+    value = $( "#ltsf-option option:selected").text();
 
-  //   if (value == "Show All") {
-  //     value = "";
-  //     table
-  //       .column(4)
-  //       .search(value)
-  //       .draw();
-  //   } else {
-  //     value = "true";
-  //     table
-  //       .column(4)
-  //       .search(value)
-  //       .draw();
-  //   } 
-  // });
+    if (value == "Show All") {
+      value = "";
+      table
+        .column(4)
+        .search(value)
+        .draw();
+    } else {
+      value = true;
+      table
+        .column(4)
+        .search(value)
+        .draw();
+    } 
+  });
   </script>
