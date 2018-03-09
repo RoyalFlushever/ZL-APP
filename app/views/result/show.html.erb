@@ -220,9 +220,27 @@
         selector: 'td:last-child'
       },
       buttons: [
-      {extend: 'csv',   className: 'btn-sm' },
-      {extend: 'excel', className: 'btn-sm', title: 'XLS-File'},
-      {extend: 'pdf',   className: 'btn-sm', title: $('title').text() },
+        { 
+          extend: 'csv',   
+          className: 'btn-sm', 
+          text: 'Download as CSV', 
+          exportOptions: {
+            // format: {
+            //   body: function (data, row, column, node) {
+            //     if(column ===4) {
+            //       if (data == "&#9989;")
+            //         return "true";
+            //       else
+            //         return "false";
+            //     }
+  
+            //     else
+            //       return data;
+            //   }
+            // },
+            columns: ':visible'
+          }
+        }
       ]
     });
 
