@@ -172,19 +172,35 @@
             {
               "targets": 7,//index of column starting from 0
               "render": function ( data, type, row, meta ) {
-                  if(data != '' && data != null)
-                    return "<a href=\"" + row.top_vendor + "\"> " + data + "</a>";
+                  if(data != '' && data != null) {
+                      return "<a href=\"" + row.top_vendor + "\"> " + data + "</a>";
+                  }
                   else
-                    return 'No Offer';
+                    return "No Offer";
               }
             },
             {
               "targets": 6,//index of column starting from 0
               "render": function ( data, type, row, meta ) {
-                  if(data != '' && data != null)
-                    return "<a href=\"" + row.tradeinurl + "\"> " + data + "</a>";
+                  if(data != '' && data != null) {
+                    if ( type == "display") {
+                      console.log(type);
+                      return "<a href=\"" + row.tradeinurl + "\"> " + data + "</a>";
+                    }
+                    else 
+                      return data;
+                  } 
                   else
-                    return 'No Offer';
+                    return "No Offer";
+              }
+            },
+            {
+              "targets": 4,
+              "render": function(data, type, row, meta) {
+                if (data == true)
+                    return "&#9989;" ;
+                else 
+                  return "&#10080;" ;
               }
             } 
         ],
@@ -213,10 +229,11 @@
     });
 
 
-  var value_regex =     "^(0*[1-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[1-9][0-9]*)$";
+  var value_regex =     "(0*[1-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[1-9][0-9]*)";
   
   $('#value-option').change(function(){
     value = $( "#value-option option:selected").text();
+
     if (value == "Buy Back") {
       table
         .column(7)
@@ -226,7 +243,7 @@
         .column(6)
         .search("")
         .draw();
-    } else if(value == "Trade-in") {
+    } else if (value == "Trade-in") {
       table
         .column(6)
         .search(value_regex, true)
@@ -247,20 +264,21 @@
     } 
   });
 
-  $('#ltsf-option').change(function() {
-    value = $( "#ltsf-option option:selected").text();
-    if (value == "Show All") {
-      value = "";
-      table
-        .column(4)
-        .search(value)
-        .draw();
-    } else {
-      value = "true";
-      table
-        .column(4)
-        .search(value)
-        .draw();
-    } 
-  });
+  // $('#ltsf-option').change(function() {
+  //   value = $( "#ltsf-option option:selected").text();
+
+  //   if (value == "Show All") {
+  //     value = "";
+  //     table
+  //       .column(4)
+  //       .search(value)
+  //       .draw();
+  //   } else {
+  //     value = "true";
+  //     table
+  //       .column(4)
+  //       .search(value)
+  //       .draw();
+  //   } 
+  // });
   </script>
