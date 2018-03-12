@@ -1,5 +1,4 @@
 require 'Product'
-require 'bookland'
 
 class CallApiJob < ActiveJob::Base 
   queue_as :default
@@ -212,12 +211,10 @@ class CallApiJob < ActiveJob::Base
 	def paapi_call ten_prod_arr
 		# use vacuum gem
     request = Vacuum.new
-		request.configure(
-      aws_access_key_id: 'AKIAIOXYKUVGX7Q44KXQ',
-      aws_secret_access_key: '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',
-      associate_tag: 'bharathvasan9-20'
-      )
+    key = ENV['AMAZON_KEY_1']
+		request.configure(JSON.parse(key))
 
+   
 		# make 10 asin concatenate
     asin_length = ten_prod_arr.length
     if asin_length > 10 
@@ -229,10 +226,10 @@ class CallApiJob < ActiveJob::Base
     end
 
     query = {
-    'ItemLookup.1.ItemId': asins_1,# asins
-    'ItemLookup.Shared.ResponseGroup': 'ItemAttributes, SalesRank', # response groups
-    'ItemLookup.Shared.IdType': 'ASIN',
-    'ItemLookup.2.ItemId': asins_2# asins
+      'ItemLookup.1.ItemId': asins_1, # asins
+      'ItemLookup.Shared.ResponseGroup': 'ItemAttributes, SalesRank', # response groups
+      'ItemLookup.Shared.IdType': 'ASIN',
+      'ItemLookup.2.ItemId': asins_2  # asins
     }
 
 		begin
@@ -244,6 +241,7 @@ class CallApiJob < ActiveJob::Base
 		rescue Excon::Error::ServiceUnavailable
       nil
     end
+    
 	end
   
 end

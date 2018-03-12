@@ -39,7 +39,6 @@ gem 'dropzonejs-rails'
 gem 'httparty'
 gem 'vacuum'
 gem 'typhoeus'
-gem 'bookland', '~> 3.2', '>= 3.2.1'
 
 gem 'dotenv-rails', :groups => [:development, :test]
 
