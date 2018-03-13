@@ -27,8 +27,11 @@
 # ignore environment variables
 .env
 
-/public/inventory/*.json
-/public/result/*.json
+public/inventory/*.json
+public/result/*.json
+
+!public/inventory/.gitkeep
+!public/result/.gitkeep
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
