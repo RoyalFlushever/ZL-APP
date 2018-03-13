@@ -22,7 +22,6 @@ class CallApiJob < ActiveJob::Base
     ten_prod_arr = []
   	# create result product array
   	products = [] # :msku, :name, :price, :days, :ltsf, :price, :tradein, :cash
-
     data_hash.length.times.map { |index|  
     	
     	# get every 10 items for a request.
@@ -35,6 +34,8 @@ class CallApiJob < ActiveJob::Base
 				
         valid_asins    = asin_validation_test ten_prod_arr
         response_amz   = paapi_call valid_asins                        # call to amazon
+       
+
 
         if response_amz.is_a?(Array) # if 20 items
           items = response_amz[0]['Item'] + response_amz[1]['Item'] # all 20 items response in an Array
@@ -209,22 +210,22 @@ class CallApiJob < ActiveJob::Base
 	end
 
 	def paapi_call ten_prod_arr
-		# use vacuum gem
-    request = Vacuum.new
-    key = ENV['AMAZON_KEY_1']
-		request.configure(JSON.parse(key))
-
    
-		# make 10 asin concatenate
+    # make 10 asin concatenate
     asin_length = ten_prod_arr.length
+
     if asin_length > 10 
+
       asins_1 = ten_prod_arr[0..9].join(',')
       asins_2 = ten_prod_arr[10..-1].join(',')
+
     else
+
       asins_1 = ten_prod_arr.join(',')
       asins_2 = ''
-    end
 
+    end
+    request = Vacuum.new
     query = {
       'ItemLookup.1.ItemId': asins_1, # asins
       'ItemLookup.Shared.ResponseGroup': 'ItemAttributes, SalesRank', # response groups
@@ -232,16 +233,16 @@ class CallApiJob < ActiveJob::Base
       'ItemLookup.2.ItemId': asins_2  # asins
     }
 
-		begin
-			response = request.item_lookup(query: query)
-			puts response.status
-			# Return up to 20 offers.
-      # [{10items}, {10items}] 
-			batches = response.dig('ItemLookupResponse', 'Items')
-		rescue Excon::Error::ServiceUnavailable
+    request.configure(JSON.parse(ENV['AMAZON_KEY_1']))
+
+    begin
+      response = request.item_lookup(query: query)
+      p response.status
+      batches = response.dig('ItemLookupResponse', 'Items')
+    rescue Excon::Error::ServiceUnavailable
       nil
     end
-    
+
 	end
   
 end

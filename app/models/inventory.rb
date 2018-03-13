@@ -29,9 +29,7 @@ class Inventory < ApplicationRecord
     end
 
     # get current Time 
-    time = Time.new
-
-    file_name = "#{time.year}#{time.month}#{time.day}#{time.hour}#{time.min}#{time.sec}" + "_inventory.json"
+    file_name = Time.now.to_s + "_inventory.json"
     File.open("public/inventory/#{file_name}", "w") do |file|
       file.write(inventories_json.to_json)
     end

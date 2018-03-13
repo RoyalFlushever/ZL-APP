@@ -29,3 +29,7 @@
 
 /public/inventory
 /public/result
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

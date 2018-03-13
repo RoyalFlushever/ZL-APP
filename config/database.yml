@@ -19,6 +19,4 @@ test:
   database: zl_test
 
 production:
-  <<: *default
-  # database: db/production.sqlite3
-  database: zl_product
+  url: <%= ENV['DATABASE_URL'] %>
