@@ -29,8 +29,8 @@ class Inventory < ApplicationRecord
     end
 
     # get current Time 
-    file_name = Time.now.to_s + "_inventory.json"
-    File.open("public/inventory/#{file_name}", "w") do |file|
+    file_name = Time.now.to_i.to_s + "_inventory.json"
+    File.open("#{Rails.root}/public/inventory/#{file_name}", "w") do |file|
       file.write(inventories_json.to_json)
     end
 
