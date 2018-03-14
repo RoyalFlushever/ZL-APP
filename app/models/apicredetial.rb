@@ -1,2 +1,0 @@
-class Apicredetial < ApplicationRecord
-end

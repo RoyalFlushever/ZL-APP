@@ -1,7 +1,7 @@
 require 'Product'
 
-class CallApiJob < ActiveJob::Base 
-  queue_as :default
+class CallApiJob < ActiveJob::Base
+  queue_as :call_api_job
 
   def perform(filename)
   	@progress_bar = Progressbar.find_by(taskname: filename)
@@ -35,8 +35,6 @@ class CallApiJob < ActiveJob::Base
         valid_asins    = asin_validation_test ten_prod_arr
         response_amz   = paapi_call valid_asins                        # call to amazon
        
-
-
         if response_amz.is_a?(Array) # if 20 items
           items = response_amz[0]['Item'] + response_amz[1]['Item'] # all 20 items response in an Array
         else 
@@ -59,7 +57,7 @@ class CallApiJob < ActiveJob::Base
           isbn_array << isbn
         end
 
-        responses_cash = buybackapi_call_test isbn_array     # call to buyback
+        responses_cash = buybackapi_call_test(isbn_array)  # call to buyback
                 
         p items.length
         ten_prod_arr.length.times.map { | j |
@@ -88,26 +86,21 @@ class CallApiJob < ActiveJob::Base
             # from the AMZ PAAPI
             resource_url = items[j]['DetailPageURL']  
             sales_rank   = items[j]['SalesRank'].nil? ? 'No Rank' : items[j]['SalesRank']
-            
             p 'resource_url' + resource_url
             # TradeIn
             if items[j]['ItemAttributes'].has_key? "TradeInValue"
               tradein_string = items[j]['ItemAttributes']['TradeInValue']['Amount']
               trade_in       = tradein_string.to_f / 100
-
             else
               trade_in = 0 
             end
-
           else
-            
             p "mil"
             product.cash       = 0
             product.top_vendor = ""
             resource_url       = ""
             sales_rank         = "No Rank"
             trade_in = 0
-
           end
             
           p "inventory = " + data_hash[index - 20 + j + 1]['asin1'].to_s

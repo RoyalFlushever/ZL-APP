@@ -39,6 +39,7 @@ gem 'dropzonejs-rails'
 gem 'httparty'
 gem 'vacuum'
 gem 'typhoeus'
+gem 'active_elastic_job'
 
 gem 'dotenv-rails', :groups => [:development, :test]
 
