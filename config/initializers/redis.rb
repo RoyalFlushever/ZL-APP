@@ -1,5 +1,5 @@
 begin
-	Redis.current = Redis.new(:host => ENV["REDIS_HOST"], :port => ENV["REDIS_PORT"])
+	Redis.current = Redis.new(url: ENV["REDIS_URL"])
 rescue Exception => e
   puts e
 end
