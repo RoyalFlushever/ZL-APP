@@ -162,7 +162,7 @@ class CallApiJob < ActiveJob::Base
       end
     }
     # save to public/result/#{filename}
-    File.open("public/result/#{filename}", "w") do |file|
+    File.open("#{Rails.root}/public/result/#{filename}", "w") do |file|
       file.write(products.to_json)
     end
   end
