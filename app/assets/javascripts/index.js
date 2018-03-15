@@ -42,6 +42,7 @@
       uploadMultiple: false,  // only upload one file
       maxFiles: 1,            // max file upload file : 1  
       acceptedFiles: ".csv",  // accept .csv file only 
+      dictDefaultMessage: "Drop files here or Click to upload",
       dictInvalidFileType: "You can't upload files of this type. Only Accept CSV.",
       success: function(file, result){
         filename = result.filename;

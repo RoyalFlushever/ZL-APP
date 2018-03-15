@@ -357,7 +357,7 @@
                   <div class="fieldset row">
                     <div class="form-group">
                       <label for="email" class="email-label control-label col-sm-5">Email address:</label>
-                      <input id="email" class="col-sm-7 form-control" name="stripeEmail" data-tid="elements_examples.form.email_label" type="email" placeholder="Email" required=""></input> 
+                      <input id="email" class="col-sm-7 form-control" name="stripeEmail" data-tid="elements_examples.form.email_label" type="email" placeholder="Email" required="" autocomplete="on" />
                     </div>
                   </div>
                   <div class="fieldset row">
@@ -373,7 +373,7 @@
                   <div class="fieldset row">
                     <div class="form-group col-sm-8">
                       <label for="name-on-card" class="control-label ">Name on Card:</label>
-                      <input id="name-on-card" data-tid="elements_examples.form.name_label" class="field form-control" type="text" placeholder="Name" required="">
+                      <input id="name-on-card" data-tid="elements_examples.form.name_label" class="field form-control" type="text" placeholder="Name" required="" autocomplete="on">
                     </div>
                     <div class="form-group col-sm-4">
                       <label for="card-cvc" class="control-label">Card Code:</label>
@@ -382,7 +382,7 @@
                   </div>
                   <!-- Used to display form errors. -->
                   <div id="card-errors" role="alert"></div>
-                  <button type="submit" data-tid="elements_examples.form.pay_button"><span class="lead">Pay $<%= @amount %></span><br> (Show $100 instant profit opportunity)</button>
+                  <button type="submit" id="pay-submit" data-tid="elements_examples.form.pay_button"><span class="lead">Pay $<%= @amount %></span><br> (Show $100 instant profit opportunity)</button>
                 </form>
               </div>
             </div>
@@ -436,6 +436,13 @@
           // card.mount('#card-element');
           var form = document.getElementById('payment-form');
           var name = form.querySelector('#name-on-card');
+          var cardEmail = form.querySelector('#email');
+
+          function validateEmail(email) {
+            var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(email);
+          }
+
           var additionalData = {
             name: name? name.value : undefined
           }
@@ -470,16 +477,26 @@
               }
             });
           });
-
+          
           // Handle form submission. including email
-          var form = document.getElementById('payment-form');
           form.addEventListener('submit', function(event){
             event.preventDefault();
+            if (!validateEmail(cardEmail.value)) {
+              // alert(cardEmail.value);
+              displayError.textContent = "Invalid Email";
+              return false;  
+            }
 
             stripe.createToken(card_elements[0], additionalData).then(function(result){
               if (result.error) {
                 displayError.textContent = result.error.message;
               } else {
+                if (!validateEmail(cardEmail.value)) {
+                  alert(cardEmail.value);
+                  displayError.textContent = "Invalid Email";
+                  return false;  
+                } 
+                displayError.textContent = "";
                 // Insert the token ID into the form so it gets submitted to the server
                 var form = document.getElementById('payment-form');
                 var hiddenInput = document.createElement('input');
@@ -488,8 +505,6 @@
                 hiddenInput.setAttribute('value', result.token.id);
 
                 form.appendChild(hiddenInput);
-                // alert(result.token.id);
-                // alert('submitting form');
                 // Submit the form
                 form.submit();
               }
