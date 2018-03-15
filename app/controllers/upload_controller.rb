@@ -19,6 +19,16 @@ class UploadController < ApplicationController
     else
 
 			file_name = Inventory.import_from_csv(params[:file])
+			
+			p "file_name" + file_name.to_s
+			if (file_name == "Check your CSV file Columns!")
+				respond_to do |format|
+					result = { redirect_url: start_url, filename: file_name }
+			    format.json  { render :json => result } # don't do msg.to_json
+			  end
+			  return
+			end
+
 			Progressbar.init(file_name)
 
 			respond_to do |format|

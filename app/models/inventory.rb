@@ -15,6 +15,12 @@ class Inventory < ApplicationRecord
    #    t.asin1 = row['asin1']
    #    t.asin2 = row['asin2']
    #    t.asin3 = row['asin3']
+      # CSV Header Check
+      # 
+      headers = ["item-name", "item-description", "listing-id", "seller-sku", "price", "quantity", "open-date", "image-url", "item-is-marketplace", "product-id-type", "zshop-shipping-fee", "item-note", "item-condition", "zshop-category1", "zshop-browse-path", "zshop-storefront-feature", "asin1", "asin2", "asin3", "will-ship-internationally", "expedited-shipping", "zshop-boldface", "product-id", "bid-for-featured-placement", "add-delete", "pending-quantity", "fulfillment-channel"]
+      p row.headers
+      return "Check your CSV file Columns!" unless row.headers.sort == headers.sort
+
       inventory_json = {
         "item-name" => row['item-name'],
         "listingID" => row['listing-id'],

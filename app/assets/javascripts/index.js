@@ -39,13 +39,43 @@
     var filename;
     // Dropzone option config. myDropzone - id: my-dropzone
     Dropzone.options.myDropzone = {
+      init: function() {
+        this.on("addedfile", function(file) {
+
+          // Create the remove button
+          var removeButton = Dropzone.createElement("<button class='btn btn-danger delete'>Remove file</button>");
+
+          // Capture the Dropzone instance as closure.
+          var _this = this;
+
+          // Listen to the click event
+          removeButton.addEventListener("click", function(e) {
+            // Make sure the button click doesn't submit the form:
+            e.preventDefault();
+            e.stopPropagation();
+
+            // Remove the file preview.
+            _this.removeFile(file);
+            // If you want to the delete the file on the server as well,
+            // you can do the AJAX request here.
+          });
+
+          // Add the button to the file preview element.
+          file.previewElement.appendChild(removeButton);
+        });
+      },
+
       uploadMultiple: false,  // only upload one file
       maxFiles: 1,            // max file upload file : 1  
       acceptedFiles: ".csv",  // accept .csv file only 
       dictDefaultMessage: "Drop files here or Click to upload",
       dictInvalidFileType: "You can't upload files of this type. Only Accept CSV.",
       success: function(file, result){
-        filename = result.filename;
+        if (result.filename) {
+          filename = result.filename;
+        } else {
+          alert("Check your CSV file Columns!");          
+        }
       }             
     }
 
@@ -89,15 +119,29 @@
 
     // multi step handle
     $('.show-profit').click( function( event ){
-      if(filename) {
+      // if(filename && (filename != "Check your CSV file Columns!")) {
+      //   $('.sync-amz').fadeOut('fast', function(){
+      //     $('.scan-inventory').fadeIn('fast');
+      //     ajaxFn();
+      //     $.get('/create', {filename: filename});
+      //   });
+      // } else {
+      // }
+
+      if (!filename) {
+        alert("Choose your inventory file first");
+      } 
+      else if (filename == "Check your CSV file Columns!") {
+        alert("Please Check your CSV file Columns! ");
+      } 
+      else {
         $('.sync-amz').fadeOut('fast', function(){
           $('.scan-inventory').fadeIn('fast');
           ajaxFn();
           $.get('/create', {filename: filename});
         });
-      } else {
-        alert("Choose your inventory file first");
       }
+
     });
 
     $('#get-access').on('click', function(){
