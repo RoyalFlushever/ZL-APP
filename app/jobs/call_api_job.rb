@@ -243,8 +243,7 @@ class CallApiJob < ActiveJob::Base
     # rescue Excon::Error::ServiceUnavailable
     #   nil
     # end
-
-
+    
     batches = nil
 
     until batches
