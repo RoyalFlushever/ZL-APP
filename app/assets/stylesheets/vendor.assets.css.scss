@@ -39,17 +39,17 @@
 /* Datatables */
 
 table.dataTable thead .sorting {
-  background: image-url("/images/datatable-bootstrap/images/sort_both.png") no-repeat center right;
+  background: image-url(asset_path('sort_both.png')) no-repeat center right;
 }
 table.dataTable thead .sorting_asc {
-  background: image-url("/images/datatable-bootstrap/images/sort_asc.png") no-repeat center right;
+  background: image-url(asset_path("sort_asc.png")) no-repeat center right;
 }
 table.dataTable thead .sorting_desc {
-  background: image-url("/images/datatable-bootstrap/images/sort_desc.png") no-repeat center right;
+  background: image-url(asset_path("sort_desc.png")) no-repeat center right;
 }
 table.dataTable thead .sorting_asc_disabled {
-  background: image-url("/images/datatable-bootstrap/images/sort_asc_disabled.png") no-repeat center right;
+  background: image-url(asset_path("sort_asc_disabled.png")) no-repeat center right;
 }
 table.dataTable thead .sorting_desc_disabled {
-  background: image-url("/images/datatable-bootstrap/images/sort_desc_disabled.png") no-repeat center right;
+  background: image-url(asset_path("sort_desc_disabled.png")) no-repeat center right;
 }
