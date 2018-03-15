@@ -29,7 +29,7 @@ class Inventory < ApplicationRecord
     end
 
     # get current Time to miliseconds string
-    file_name = Time.now.to_i.to_s + "_inventory.json"
+    file_name = Time.now.to_i.to_s + Random.rand.to_s +"_inventory.json"
     File.open("#{Rails.root}/public/inventory/#{file_name}", "w") do |file|
       file.write(inventories_json.to_json)
     end
