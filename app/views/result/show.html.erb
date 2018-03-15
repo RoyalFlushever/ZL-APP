@@ -131,9 +131,10 @@
         </div>
       </div>
   </section>
+  
   <script type="text/javascript">
-    alert('Payment Done');
-
+  
+  alert('Payment Done! Now You Get Access to your Profit Data.');
   var table =  $('#result-datatable').DataTable({
       'paging':   true,  // Table pagination
       'ordering': true,  // Column ordering
@@ -198,7 +199,7 @@
                   }
                 }
                 else 
-                  return "&#10080;" ;
+                  return false ;
               }
             } 
         ],
