@@ -36,3 +36,6 @@ public/result/*.json
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+
+# SSH key
+*.pem
