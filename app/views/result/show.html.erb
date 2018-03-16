@@ -165,41 +165,71 @@
       ],
       "columnDefs": [ 
             {
-              "targets": 7,//index of column starting from 0
+              "targets": 2, //index of column starting from 0
               "render": function ( data, type, row, meta ) {
-                  if(data != '' && data != null) {
-                      return "<a href=\"https://www.bookfinder.com/buyback/search/#" + row.top_vendor + "\" target= \"_blank\"> " + data + "</a>";
-                  }
-                  else
-                    return "No Offer";
+                if ( type == "display")
+                  return parseInt(data).toLocaleString('en');  
+                else
+                  return data;
               }
             },
             {
-              "targets": 6,//index of column starting from 0
+              "targets": 3, //index of column starting from 0
               "render": function ( data, type, row, meta ) {
-                  if(data != '' && data != null) {
-                    if ( type == "display") {
-                      return "<a href=\"" + row.tradeinurl + "\" target = \"_blank\"> " + data + "</a>";
-                    }
-                    else 
-                      return data;
-                  } 
+                if ( type == "display")
+                  return parseInt(data).toLocaleString('en');  
+                else
+                  return data;
+              }
+            },
+            {
+              "targets": 7, //index of column starting from 0
+              "render": function ( data, type, row, meta ) {
+                if(data != '' && data != null) {
+                  if( type == "display") 
+                    return "<a href=\"https://www.bookfinder.com/buyback/search/#" + row.top_vendor + "\" target= \"_blank\"> " + data.toLocaleString('en', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + "</a>";
                   else
-                    return "No Offer";
+                    return data;
+                }
+                else {
+                  if ( type == "display")
+                    return "No offer";
+                  else
+                    return data;
+                }
+              }
+            },
+            {
+              "targets": 6, //index of column starting from 0
+              "render": function ( data, type, row, meta ) {
+                if(data != '' && data != null) {
+                  if ( type == "display") {
+                    return "<a href=\"" + row.tradeinurl + "\" target = \"_blank\"> " + data.toLocaleString('en', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + "</a>";
+                  }
+                  else 
+                    return data;
+                } 
+                else {
+                  if ( type == "display")
+                    return "No offer";
+                  else
+                    return data;
+                }
               }
             },
             {
               "targets": 4,
               "render": function(data, type, row, meta) {
-                if (data == true) {
                   if (type == "display") {
-                    return "&#9989;" ;
+                    if (data == "true")
+                      return "&#9989;";
+                    if (data == "soon")
+                      return "<span class=\"soon-checkmark\">&#10003;</span>"
+                    else
+                      return ""    
                   } else {
-                    return true;
+                    return data;
                   }
-                }
-                else 
-                  return false ;
               }
             } 
         ],
@@ -246,7 +276,7 @@
     });
 
 
-  var value_regex =     "(0*[1-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[1-9][0-9]*)";
+  var value_regex = "(0*[1-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[1-9][0-9]*)";
   
   $('#value-option').change(function(){
     value = $( "#value-option option:selected").text();
@@ -291,7 +321,7 @@
         .search(value)
         .draw();
     } else {
-      value = true;
+      value = "true";
       table
         .column(4)
         .search(value)

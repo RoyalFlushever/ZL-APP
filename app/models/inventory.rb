@@ -21,23 +21,27 @@ class Inventory < ApplicationRecord
       p row.headers
       return "Check your CSV file Columns!" unless row.headers.sort == headers.sort
 
-      inventory_json = {
-        "item-name" => row['item-name'],
-        "listingID" => row['listing-id'],
-        "sellerSku" => row['seller-sku'],
-        "price" => row['price'],
-        "quantity" => row['quantity'],
-        "opendate" => row['open-date'],
-        "isMarketplace" => row['item-is-marketplace'],
-        "asin1" => row['asin1']
-      }
-      inventories_json << inventory_json
+      if row['seller-sku'] && row['asin1']
+        inventory_json = {
+          "item-name" => row['item-name'],
+          "listingID" => row['listing-id'],
+          "sellerSku" => row['seller-sku'],
+          "price" => row['price'],
+          "quantity" => row['quantity'],
+          "opendate" => row['open-date'],
+          "isMarketplace" => row['item-is-marketplace'],
+          "asin1" => row['asin1']
+        }
+        inventories_json << inventory_json
+      else
+        next
+      end  
     end
-    # get random value
+    # get random string
     rand_str = SecureRandom.hex
 
     # get current Time to miliseconds string
-    file_name = Time.now.to_i.to_s + rand_str + "_inventory.json"
+    file_name = Time.now.to_i.to_s + rand_str + ".json"
     File.open("#{Rails.root}/public/inventory/#{file_name}", "w") do |file|
       file.write(inventories_json.to_json)
     end

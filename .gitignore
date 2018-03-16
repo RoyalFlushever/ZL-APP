@@ -27,8 +27,8 @@
 # ignore environment variables
 .env
 
-public/inventory/*.json
-public/result/*.json
+public/inventory/*
+public/result/*
 
 !public/inventory/.gitkeep
 !public/result/.gitkeep

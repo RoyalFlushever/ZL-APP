@@ -35,8 +35,6 @@ class CallApiJob < ActiveJob::Base
         valid_asins    = asin_validation_test ten_prod_arr
         response_amz   = paapi_call valid_asins                        # call to amazon
        
-
-
         if response_amz.is_a?(Array) # if 20 items
           items = response_amz[0]['Item'] + response_amz[1]['Item'] # all 20 items response in an Array
         else 
@@ -77,7 +75,7 @@ class CallApiJob < ActiveJob::Base
 
             # from the buyback
             if response_buyback["top_offer"].nil?
-              product.cash       = 0
+              product.cash       = 0.00
               product.top_vendor = ''
             else
               product.cash       = response_buyback["top_offer"]["price"] / 100.00
@@ -96,17 +94,17 @@ class CallApiJob < ActiveJob::Base
               trade_in       = tradein_string.to_f / 100.00
 
             else
-              trade_in = 0 
+              trade_in = 0.00 
             end
 
           else
             
             p "mil"
-            product.cash       = 0
+            product.cash       = 0.00
             product.top_vendor = ""
             resource_url       = ""
             sales_rank         = "No Rank"
-            trade_in = 0
+            trade_in = 0.00
 
           end
             
@@ -125,7 +123,14 @@ class CallApiJob < ActiveJob::Base
           end
 
           product.days  = days.ceil
-          product.ltsf  = days > 90 ? true : false
+
+          if days > 180 
+            product.ltsf = "true"
+          elsif days > 150
+            product.ltsf = "soon"
+          else
+            product.ltsf = "false"
+          end
 
           product.tradeinurl = resource_url
           product.rank       = sales_rank
@@ -255,7 +260,7 @@ class CallApiJob < ActiveJob::Base
         Redis.current.zadd("credentials", Time.now.to_i, key)
         response = request.item_lookup(query: query)
         batches = response.dig('ItemLookupResponse', 'Items')
-      rescue Excon::Error::ServiceUnavailable
+      rescue Excon::Error::ServiceUnavailable, Excon::Error::Socket
         nil
       end
     end
@@ -263,21 +268,4 @@ class CallApiJob < ActiveJob::Base
     return batches
   end
 
-  # def vacuum_run(query)
-  #   result = nil
-  #   credentials = Redis.current.zrange("credentials", 0, -1)
-  #   until result || credentials.empty?
-  #     key = credentials.pop
-  #     result = begin
-  #       self.configure(JSON.parse(key))
-  #       Redis.current.zadd("credentials", Time.now.to_i, key)
-  #       self.item_lookup(query: asins)
-  #     rescue Excon::Error::ServiceUnavailable
-  #       nil
-  #     end
-  #   end
-  #   result || vacuum_run(query)
-  #   end
-  # end
-  
 end
