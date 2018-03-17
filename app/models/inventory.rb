@@ -41,7 +41,7 @@ class Inventory < ApplicationRecord
     rand_str = SecureRandom.hex
 
     # get current Time to miliseconds string
-    file_name = Time.now.to_i.to_s + rand_str + ".json"
+    file_name = Time.now.to_i.to_s + rand_str
     File.open("#{Rails.root}/public/inventory/#{file_name}", "w") do |file|
       file.write(inventories_json.to_json)
     end

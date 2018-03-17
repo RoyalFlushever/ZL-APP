@@ -108,16 +108,16 @@ class CallApiJob < ActiveJob::Base
 
           end
             
-          p "inventory = " + data_hash[index - 20 + j + 1]['asin1'].to_s
+          p "inventory = " + data_hash[index - i + j + 1]['asin1'].to_s
 
           # from the inventory file
-          product.msku  = data_hash[index - 20 + j + 1]['sellerSku']
-          product.name  = data_hash[index -20 + j + 1]['item-name']
-          product.price = data_hash[index -20 +j + 1]['price']
+          product.msku  = data_hash[index - i + j + 1]['sellerSku']
+          product.name  = data_hash[index -i + j + 1]['item-name']
+          product.price = data_hash[index -i +j + 1]['price']
 
           # DataTime Parse error handle
           begin
-            days = (Time.now - DateTime.parse(data_hash[index - 20 + j + 1]['opendate'])) / (3600 * 24)
+            days = (Time.now - DateTime.parse(data_hash[index - i + j + 1]['opendate'])) / (3600 * 24)
           rescue Exception => e
             next
           end
