@@ -29,11 +29,13 @@ html,
 body {
   height: 100%;
   background-color: #eee; 
-}
-
-body {
   justify-content: center;
   color: #000;
+}
+
+
+footer {
+  background-color: white;
 }
 
 .table > tbody > tr > td {
@@ -92,6 +94,9 @@ table th {
   }
 }
 
+.wrapper {
+  background-color: white;
+}
 
 /*
  * Cover
