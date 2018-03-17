@@ -6,6 +6,7 @@ class ChargesController < ApplicationController
   def new
     @filename = params[:filename]
     @amount = Progressbar.where(taskname: @filename).first.profit
+    @total = Progressbar.where(taskname: @filename).first.total
   end
 
   def create
