@@ -38,6 +38,10 @@ footer {
   background-color: white;
 }
 
+h4 {
+  font-size: 24px;
+}
+
 .table > tbody > tr > td {
   vertical-align: text-top;
 }
@@ -47,6 +51,11 @@ table th {
   cursor: pointer!important;
 }
 
+// all buttons
+
+.btn {
+  font-size: 18px;
+}
 /*
  * Header
  */
@@ -152,6 +161,7 @@ table th {
   max-width: 40em;
   padding: 1rem!important;
   margin-bottom: 1rem!important;
+  margin-top: 20px;
 }
 
 .btn-outline-primary:hover {
@@ -233,6 +243,16 @@ Scanning Inventory Step
 .trade-in h4, .buyback h4 {
   color: #000;
   font-weight: 900;
+}
+
+.tradin-label, .buyback-label, .value {
+  font-size: 24px;
+}
+
+.alert {
+  color: #A61C00;
+  font-weight: 700;
+  font-size: 24px;
 }
 
 /*

@@ -82,7 +82,7 @@
     // progress bar elements
     // 
     var percent = $('.done');
-    var message = $('.to-amazon h5');
+    var message = $('.to-amazon h4');
     var bar = $('.progress-bar');
 
     // update progressbar every pingTime
@@ -105,13 +105,18 @@
             message.html(data.message + ": <span class='done'>" + data.percent + "</span> Done");
             setTimeout(ajaxFn, pingTime);
           } else {
-            message.html("Finished");
-            if (data.profit > 0.5)
-              $('#get-access').html("Yes! <br/> Get access for $<span class='profit'>" + data.profit +"</span>").attr('data-available', 'true');
-            else {
-              $('#get-access').html("Yes! <br/> Get access for free").attr('data-available', 'true');
-              $('#get-access').html("Yes! <br/> Get access for free").attr('data-charge', 'false');
-            }
+              message.html("Finished");
+              if (data.profit > 0.5)
+                $('#get-access').html("Yes! <br/> Get access for $<span class='profit'>" + data.profit +"</span>").attr('data-available', 'true');
+              else if(data.profit == 0.0) {
+                $('div.buyback').after('<p class="alert">No instant profit found:</p>');
+                $('.tradein-value').html('0');
+                $('.buyback-value').html('0');
+              } 
+              else {
+                $('#get-access').html("Yes! <br/> Get access for free").attr('data-available', 'true');
+                $('#get-access').html("Yes! <br/> Get access for free").attr('data-charge', 'false');
+              }
           }
         }
       });

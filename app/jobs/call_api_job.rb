@@ -239,16 +239,6 @@ class CallApiJob < ActiveJob::Base
       'ItemLookup.2.ItemId': asins_2  # asins
     }
 
-    # request.configure(JSON.parse(ENV['AMAZON_KEY_1']))
-
-    # begin
-    #   response = request.item_lookup(query: query)
-    #   p response.status
-    #   batches = response.dig('ItemLookupResponse', 'Items')
-    # rescue Excon::Error::ServiceUnavailable
-    #   nil
-    # end
-    
     batches = nil
 
     until batches
