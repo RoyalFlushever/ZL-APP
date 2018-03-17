@@ -5,10 +5,7 @@ Rails.application.routes.draw do
 
   resources :companies do
   	collection { post :import }
-  end 	
-
-  get 'result_show', to: 'result#show'
-  get 'renderjson' => 'result#renderjson'
+  end
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root 'index#index'
@@ -24,6 +21,13 @@ Rails.application.routes.draw do
   post 'import_inventory', to: 'upload#import'
   
   get 'show', to: 'upload#show'
+
+
+  get 'result_show', to: 'result#show'
+  get 'renderjson' => 'result#renderjson'
+  
+  # download
+  get :download, to: 'result#download'
 
   # api routes
   get '/api/i18n/:locale' => 'api#i18n'
