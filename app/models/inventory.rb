@@ -17,11 +17,16 @@ class Inventory < ApplicationRecord
    #    t.asin3 = row['asin3']
       # CSV Header Check
       # 
-      headers = ["item-name", "item-description", "listing-id", "seller-sku", "price", "quantity", "open-date", "image-url", "item-is-marketplace", "product-id-type", "zshop-shipping-fee", "item-note", "item-condition", "zshop-category1", "zshop-browse-path", "zshop-storefront-feature", "asin1", "asin2", "asin3", "will-ship-internationally", "expedited-shipping", "zshop-boldface", "product-id", "bid-for-featured-placement", "add-delete", "pending-quantity", "fulfillment-channel"]
+      headers = ["item-name", "item-description", "listing-id", "seller-sku", "price", "quantity", "open-date", "item-is-marketplace", "product-id-type", "zshop-shipping-fee", "item-note", "item-condition", "zshop-category1", "zshop-browse-path", "zshop-storefront-feature", "asin1", "asin2", "asin3", "will-ship-internationally", "expedited-shipping", "zshop-boldface", "product-id", "bid-for-featured-placement", "add-delete", "pending-quantity", "fulfillment-channel"]
+      headers = ["item-name", "listing-id", "seller-sku", "price", "quantity", "open-date", "item-is-marketplace", "asin1", ]
       p row.headers
-      return "Check your CSV file Columns!" unless row.headers.sort == headers.sort
+      # return "Check your CSV file Columns!" unless row.headers.sort == headers.sort
 
-      if row['seller-sku'] && row['asin1']
+      headers.each do |header|
+        return "Check your CSV file Columns!" unless row.headers.include? header
+      end
+
+      if row['seller-sku'] && row['asin1'] 
         inventory_json = {
           "item-name" => row['item-name'],
           "listingID" => row['listing-id'],
