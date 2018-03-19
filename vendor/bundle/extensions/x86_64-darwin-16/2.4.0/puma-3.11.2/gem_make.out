@@ -1,0 +1,32 @@
+current directory: /Volumes/Data/Workspace/Ruby on Rails/ElasticBeanstalk/zlapp/vendor/bundle/gems/puma-3.11.2/ext/puma_http11
+/Users/rose/.rvm/rubies/ruby-2.4.1/bin/ruby -r ./siteconf20180319-55842-z5p10b.rb extconf.rb
+checking for BIO_read() in -lcrypto... yes
+checking for SSL_CTX_new() in -lssl... yes
+checking for openssl/bio.h... yes
+creating Makefile
+
+current directory: /Volumes/Data/Workspace/Ruby on Rails/ElasticBeanstalk/zlapp/vendor/bundle/gems/puma-3.11.2/ext/puma_http11
+make "DESTDIR=" clean
+
+current directory: /Volumes/Data/Workspace/Ruby on Rails/ElasticBeanstalk/zlapp/vendor/bundle/gems/puma-3.11.2/ext/puma_http11
+make "DESTDIR="
+compiling http11_parser.c
+ext/puma_http11/http11_parser.c:44:18: warning: unused variable 'puma_parser_en_main' [-Wunused-const-variable]
+static const int puma_parser_en_main = 1;
+                 ^
+1 warning generated.
+compiling io_buffer.c
+compiling mini_ssl.c
+mini_ssl.c:211:27: warning: 'DTLSv1_method' is deprecated [-Wdeprecated-declarations]
+  conn->ctx = SSL_CTX_new(DTLSv1_method());
+                          ^
+/usr/local/opt/openssl@1.1/include/openssl/ssl.h:1642:45: note: 'DTLSv1_method' has been explicitly marked deprecated here
+DEPRECATEDIN_1_1_0(__owur const SSL_METHOD *DTLSv1_method(void)) /* DTLSv1.0 */
+                                            ^
+1 warning generated.
+compiling puma_http11.c
+linking shared-object puma/puma_http11.bundle
+
+current directory: /Volumes/Data/Workspace/Ruby on Rails/ElasticBeanstalk/zlapp/vendor/bundle/gems/puma-3.11.2/ext/puma_http11
+make "DESTDIR=" install
+/usr/local/opt/coreutils/bin/ginstall -c -m 0755 puma_http11.bundle ./.gem.20180319-55842-ohxsfc/puma

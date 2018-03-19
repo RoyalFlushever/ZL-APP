@@ -1,0 +1,15 @@
+current directory: /Volumes/Data/Workspace/Ruby on Rails/ElasticBeanstalk/zlapp/vendor/bundle/gems/bindex-0.5.0/ext/bindex
+/Users/rose/.rvm/rubies/ruby-2.4.1/bin/ruby -r ./siteconf20180319-59575-1xni6qy.rb extconf.rb
+creating Makefile
+
+current directory: /Volumes/Data/Workspace/Ruby on Rails/ElasticBeanstalk/zlapp/vendor/bundle/gems/bindex-0.5.0/ext/bindex
+make "DESTDIR=" clean
+
+current directory: /Volumes/Data/Workspace/Ruby on Rails/ElasticBeanstalk/zlapp/vendor/bundle/gems/bindex-0.5.0/ext/bindex
+make "DESTDIR="
+compiling cruby.c
+linking shared-object bindex/cruby.bundle
+
+current directory: /Volumes/Data/Workspace/Ruby on Rails/ElasticBeanstalk/zlapp/vendor/bundle/gems/bindex-0.5.0/ext/bindex
+make "DESTDIR=" install
+/usr/local/opt/coreutils/bin/ginstall -c -m 0755 cruby.bundle ./.gem.20180319-59575-16v998f/bindex
