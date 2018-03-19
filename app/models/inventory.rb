@@ -5,7 +5,7 @@ class Inventory < ApplicationRecord
 		CSV.foreach(file.path, headers: true, :encoding => Encoding::ISO_8859_1) do | row |
       # CSV Header Check
       # 
-      headers = ["item-name", "listing-id", "seller-sku", "price", "quantity", "open-date", "item-is-marketplace", "asin1", ]
+      headers = ["item-name", "listing-id", "seller-sku", "price", "quantity", "open-date", "item-is-marketplace", "asin1"]
       headers.each do |header|
         return "Check your CSV file Columns!" unless row.headers.include? header
       end
