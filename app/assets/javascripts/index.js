@@ -56,6 +56,7 @@
 
             // Remove the file preview.
             _this.removeFile(file);
+            $('.complete').hide();
             // If you want to the delete the file on the server as well,
             // you can do the AJAX request here.
           });
@@ -73,6 +74,7 @@
       success: function(file, result){
         if (result.filename) {
           filename = result.filename;
+          $(".upload-container").after("<span class='complete'>Complete !</span>");           
         } else {
           alert("Check your CSV file Columns!");          
         }
@@ -110,8 +112,8 @@
                 $('#get-access').html("Yes! <br/> Get access for $<span class='profit'>" + data.profit +"</span>").attr('data-available', 'true');
               else if(data.profit == 0.0) {
                 $('div.buyback').after('<p class="alert">No instant profit found:</p>');
-                $('.tradein-value').html('0');
-                $('.buyback-value').html('0');
+                $('.tradein-value').html('0.00');
+                $('.buyback-value').html('0.00');
               } 
               else {
                 $('#get-access').html("Yes! <br/> Get access for free").attr('data-available', 'true');

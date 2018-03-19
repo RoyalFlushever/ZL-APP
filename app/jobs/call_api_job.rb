@@ -59,8 +59,19 @@ class CallApiJob < ActiveJob::Base
 
         responses_cash = buybackapi_call_test(isbn_array) # call to buyback
                 
-        p items.length
+        p "================================================" + items.length.to_s
+        p "================================================" + response_amz[0]['Item'].length.to_s
+        p "================================================" + response_amz[1]['Item'].length.to_s
         ten_prod_arr.length.times.map { |j|
+
+          p "********************************************************************************"
+          p "ten or twenty products========" + ten_prod_arr[j]
+          if !items[j].nil?
+            p "Amazon Resource=========" + items[j]['ASIN']
+            next unless ten_prod_arr[j] == items[j]['ASIN']
+          else
+            next
+          end
 
           product = Product.new 
           if !responses_cash[j].nil?
@@ -111,13 +122,13 @@ class CallApiJob < ActiveJob::Base
           p "inventory = " + data_hash[index - i + j + 1]['asin1'].to_s
 
           # from the inventory file
-          product.msku  = data_hash[index - i + j + 1]['sellerSku']
-          product.name  = data_hash[index -i + j + 1]['item-name']
-          product.price = data_hash[index -i +j + 1]['price']
+          product.msku  = data_hash[index -  i + j + 1]['sellerSku']
+          product.name  = data_hash[index - i + j + 1]['item-name']
+          product.price = data_hash[index - i +j + 1]['price']
 
           # DataTime Parse error handle
           begin
-            days = (Time.now - DateTime.parse(data_hash[index - i + j + 1]['opendate'])) / (3600 * 24)
+            days = (Time.now - DateTime.parse(data_hash[index -  i + j + 1]['opendate'])) / (3600 * 24)
           rescue Exception => e
             next
           end

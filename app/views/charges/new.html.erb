@@ -14,18 +14,29 @@
           </button>
           <a class="navbar-brand" href="/">
             <div class="brand-logo">
-              <%= image_tag "z-logo.png", class: "img-responsive" , alt:"App Logo" %>
-            </div>
-            <div class="brand-logo-collapsed">
-              <%= image_tag "z-logo-single.png", class: "img-responsive", alt:"App Logo" %>
+              <%= image_tag "z-logo.png", class: "img-responsive" , alt:"Lyquidator" %>
             </div>
           </a>
         </div>
         <!-- END navbar header-->
         <!-- START Nav wrapper-->
         <div class="navbar-collapse collapse">
+          <!-- START Left navbar-->
+          <ul class="nav navbar-nav">
+            <!-- START lock screen-->
+            <li class="help-text">
+               Questions? Support@ZenArbitrage.com
+            </li>
+            <!-- END lock screen-->
+          </ul>
           <!-- START Right Navbar-->
           <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="https://www.fbamastery.com" class="external-link" target="_blank">Blog</a>
+            </li>
+            <li>
+              <a href="https://www.fbamastery.com/sell-fba-courses" class="external-link" target="_blank">Courses &amp; Tools</a>
+            </li>
             <!-- Fullscreen (only desktops)-->
             <li class="visible-lg">
               <a href="#" data-toggle-fullscreen="">
@@ -347,7 +358,7 @@
             </div>
             <div class="content container p-3 mb-3">
               <div class="to-amazon mx-5 px-2">
-                <h4 class="mb-2">Complete &amp; access</h4>
+                <h4 class="mb-2">Complete for access</h4>
               </div>
               <div class="card-wrapper">
                 <form action="/charges" method="post" id="payment-form">
@@ -382,7 +393,7 @@
                   </div>
                   <!-- Used to display form errors. -->
                   <div id="card-errors" role="alert"></div>
-                  <button type="submit" id="pay-submit" data-tid="elements_examples.form.pay_button"><span class="lead">Pay $<%= @amount %></span><br> (Show $<%= @total %> instant profit opportunity)</button>
+                  <button type="submit" id="pay-submit" data-tid="elements_examples.form.pay_button"><span class="lead">Pay $<%= @amount %></span><br> (Show <%= number_to_currency(@total, precision: 2)%> instant profit opportunity)</button>
                 </form>
               </div>
             </div>

@@ -36,6 +36,6 @@ class ChargesController < ApplicationController
     end
 
     def set_description
-      @description = "Zen Liquidator - app"
+      @description = "Lyquidator"
     end
 end

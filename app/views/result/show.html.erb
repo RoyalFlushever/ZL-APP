@@ -14,23 +14,32 @@
           </button>
           <a class="navbar-brand" href="/">
             <div class="brand-logo">
-              <%= image_tag "z-logo.png", class: "img-responsive" , alt: "App Logo" %>
+              <%= image_tag "z-logo.png", class: "img-responsive" , alt: "Lyquidator" %>
             </div>
-            <div class="brand-logo-collapsed">
-              <%= image_tag "z-logo-single.png", class: "img-responsive", alt: "App Logo" %>
-            </div>
+            
           </a>
         </div>
         <!-- END navbar header-->
         <!-- START Nav wrapper-->
         <div class="navbar-collapse collapse">
+          <!-- START Left navbar-->
+          <ul class="nav navbar-nav">
+            <!-- START lock screen-->
+            <li class="help-text">
+               Questions? Support@ZenArbitrage.com
+            </li>
+            <!-- END lock screen-->
+          </ul>
           <!-- START Right Navbar-->
           <ul class="nav navbar-nav navbar-right">
             <!-- Search icon-->
             <li>
-              <%= link_to 'Go Back Again', root_path %>
+              <a href="https://www.fbamastery.com" class="external-link" target="_blank">Blog</a>
             </li>
-            <!-- Fullscreen (only desktops)-->
+            <li>
+              <a href="https://www.fbamastery.com/sell-fba-courses" class="external-link" target="_blank">Courses &amp; Tools</a>
+            </li>
+           <!-- Fullscreen (only desktops)-->
             <li class="visible-lg">
               <a href="#" data-toggle-fullscreen="">
                 <em class="fa fa-expand"></em>
@@ -87,12 +96,6 @@
                     </div>
                   </div>
 
-                  <%=  form_tag url_for(:controller => 'result', :action => 'download'), method: :get, :id => 'download_form', :class => 'btn pull-right download' do %>
-                    <%= hidden_field_tag 'filename', @file_name %>
-                    <%= hidden_field_tag 'row' %>
-                    <%= submit_tag "Download CSV", :readonly => true %>
-                  <% end %>
-
                 </div>
                 <div class="panel-body">
                   <div class="table-responsive">
@@ -126,7 +129,7 @@
                           <th></th>
                           <th></th>
                           <th class="text-center">
-                            <strong>Mark</strong>
+                            <strong>REVIEWED</strong>
                           </th>
                         </tr>
                       </thead>
@@ -145,8 +148,6 @@
   
   <script type="text/javascript">
   
-  alert('Now You Get Access to your Profit Data.');
-
   var download_form = $("#download_form");
   var table_data_hidden = $("input[name='row']");
 
@@ -159,6 +160,7 @@
       "processing": false,
       "serverSide": false,
       "scrollX": true,
+      "order": [[ 7, "desc" ]],
       sAjaxSource: "/renderjson" + "?filename=" + "<%= @file_name %>",      
       aoColumns: [
         { mData: 'msku' },
@@ -259,10 +261,35 @@
         infoFiltered: '(filtered from _MAX_ total records)',
         pageLength: '10'
       },
+      // Datatable Buttons setup
+      dom: '<"html5buttons"B>lTfgitp',
       select: {
         style:    'multi',
         selector: 'td:last-child'
-      }
+      },
+      buttons: [
+        { 
+          extend: 'csv',   
+          className: 'btn-sm', 
+          text: 'Download as CSV', 
+          exportOptions: {
+            // format: {
+            //   body: function (data, row, column, node) {
+            //     if(column ===4) {
+            //       if (data == "&#9989;")
+            //         return "true";
+            //       else
+            //         return "false";
+            //     }
+  
+            //     else
+            //       return data;
+            //   }
+            // },
+            columns: ':visible'
+          }
+        }
+      ]
     });
 
   

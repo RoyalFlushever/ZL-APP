@@ -33,6 +33,19 @@ body {
   color: #000;
 }
 
+.navbar-brand {
+  margin-left: 52px;
+}
+
+.brand-logo {
+  padding: 13px 24px!important;
+}
+
+a.external-link:hover {
+  cursor: pointer;
+}
+
+
 
 footer {
   background-color: white;
@@ -92,6 +105,10 @@ table th {
 .nav-masthead .active {
   color: #333;
   border-bottom-color: #fff;
+}
+
+.help-text {
+  margin: 20px 40px;
 }
 
 @media (min-width: 48em) {
@@ -184,6 +201,14 @@ table th {
   padding: 10px;
 }
 
+.inventory-download {
+  font-size: 18px;
+}
+
+.amz-link {
+  font-size: 14px;
+}
+
 .box-placeholder {
   border-radius: .8em;
 }
@@ -200,6 +225,15 @@ table th {
 
 .dropzone-wrapper {
   max-width: 50%;
+}
+
+.delete {
+  font-size: 11px;
+}
+
+.complete {
+  font-size: 16px;
+  color: #1b72e2;
 }
 
 .or {
