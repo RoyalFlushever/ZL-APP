@@ -126,20 +126,11 @@
 
     // multi step handle
     $('.show-profit').click( function( event ){
-      // if(filename && (filename != "Check your CSV file Columns!")) {
-      //   $('.sync-amz').fadeOut('fast', function(){
-      //     $('.scan-inventory').fadeIn('fast');
-      //     ajaxFn();
-      //     $.get('/create', {filename: filename});
-      //   });
-      // } else {
-      // }
-
       if (!filename) {
         alert("Choose your inventory file first");
       } 
-      else if (filename == "Check your CSV file Columns!") {
-        alert("Please Check your CSV file Columns! ");
+      else if (filename == "Check your TXT file Columns!") {
+        alert("Please Check your TXT file Columns! ");
       } 
       else {
         $('.sync-amz').fadeOut('fast', function(){
