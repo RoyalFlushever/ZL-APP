@@ -112,7 +112,17 @@ table th {
 }
 
 .help-text {
-  margin: 20px 40px;
+  margin: 5px 20px 0px 20px;
+}
+
+.help-text a {
+  color: #117391!important;
+  &:hover {
+    color: white!important;
+  }
+}
+
+.help-text a:hover {
 }
 
 @media (min-width: 48em) {
