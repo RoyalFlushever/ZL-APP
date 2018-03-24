@@ -69,7 +69,7 @@
       uploadMultiple: false,  // only upload one file
       maxFiles: 1,            // max file upload file : 1  
       acceptedFiles: ".txt",  // accept .txt file only 
-      dictDefaultMessage: "Drop Your All Inventory File Here,<br> Or Click To Upload",
+      dictDefaultMessage: "Drop Your \"All Inventory File\" Here,<br> Or Click To Upload",
       dictInvalidFileType: "You can't upload files of this type. Only Accept TXT.",
       success: function(file, result){
         if (result.filename) {
