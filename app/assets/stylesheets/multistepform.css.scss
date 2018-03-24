@@ -41,6 +41,10 @@ body {
   padding: 13px 24px!important;
 }
 
+a.external-link {
+  font-size: 18px;
+}
+
 a.external-link:hover {
   cursor: pointer;
 }
@@ -221,6 +225,10 @@ table th {
   border-style: dashed;
   align-items: center;
   justify-content: center;
+}
+
+.dz-default.dz-message {
+  font-size: 16px;
 }
 
 .dropzone-wrapper {

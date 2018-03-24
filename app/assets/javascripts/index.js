@@ -68,15 +68,15 @@
 
       uploadMultiple: false,  // only upload one file
       maxFiles: 1,            // max file upload file : 1  
-      acceptedFiles: ".csv",  // accept .csv file only 
-      dictDefaultMessage: "Drop files here or Click to upload",
-      dictInvalidFileType: "You can't upload files of this type. Only Accept CSV.",
+      acceptedFiles: ".txt",  // accept .txt file only 
+      dictDefaultMessage: "Drop Your All Inventory File Here,<br> Or Click To Upload",
+      dictInvalidFileType: "You can't upload files of this type. Only Accept TXT.",
       success: function(file, result){
         if (result.filename) {
           filename = result.filename;
           $(".upload-container").after("<span class='complete'>Complete !</span>");           
         } else {
-          alert("Check your CSV file Columns!");          
+          alert("Check your TXT file Columns!");          
         }
       }             
     }
