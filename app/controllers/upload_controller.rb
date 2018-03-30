@@ -1,5 +1,3 @@
-require 'csv'
-
 class UploadController < ApplicationController
 	
 	# GET /upload 

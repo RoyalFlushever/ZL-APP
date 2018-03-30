@@ -60,8 +60,6 @@ class CallApiJob < ActiveJob::Base
         responses_cash = buybackapi_call_test(isbn_array) # call to buyback
                 
         p "================================================" + items.length.to_s
-        # p "================================================" + response_amz[0]['Item'].length.to_s
-        # p "================================================" + response_amz[1]['Item'].length.to_s
         ten_prod_arr.length.times.map { |j|
 
           p "********************************************************************************"

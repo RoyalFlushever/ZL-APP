@@ -8,7 +8,7 @@ class Inventory < ApplicationRecord
       i += 1
       row = line.split("\t")
       # TXT Header Check
-      headers = ["item-name", "listing-id", "seller-sku", "price", "quantity", "open-date", "item-is-marketplace", "asin1", "status\n"]
+      headers = ["listing-id", "seller-sku", "price", "quantity", "open-date", "item-is-marketplace", "asin1", "status\n"]
       if i == 1
         p row
         headers.each do |header|
