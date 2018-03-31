@@ -14,24 +14,24 @@ class Inventory < ApplicationRecord
         headers.each do |header|
           return "Check your TXT file Columns!" unless row.include? header
         end
-      else  
-        if row[3] && row[16] # seller-sku, asin1
-          inventory_json = {
-            "item-name" => row[0],
-            "listingID" => row[2],
-            "sellerSku" => row[3],
-            "price" => row[4],
-            "quantity" => row[5],
-            "opendate" => row[6],
-            "isMarketplace" => row[8],
-            "asin1" => row[16]
-          }
-          inventories_json << inventory_json
-        else
-          next
-        end 
+      elsif row[3] && row[16] && row[27] == "Active\n" # seller-sku, asin1, Status = Active
+        inventory_json = {
+          "item-name" => row[0],
+          "listingID" => row[2],
+          "sellerSku" => row[3],
+          "price" => row[4],
+          "quantity" => row[5],
+          "opendate" => row[6],
+          "isMarketplace" => row[8],
+          "asin1" => row[16]
+        }
+        inventories_json << inventory_json
+      else
+        next
       end 
     end
+    # puts active row numbers
+    p "inventories_json.length =====================================" + inventories_json.length.to_s
     # get random string
     rand_str = SecureRandom.hex
 

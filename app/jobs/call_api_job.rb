@@ -87,7 +87,7 @@ class CallApiJob < ActiveJob::Base
               product.cash       = 0.00
               product.top_vendor = ''
             else
-              product.cash       = response_buyback["top_offer"]["price"] / 100.00
+              product.cash       = response_buyback["top_offer"]["price"] > 0.00 ? response_buyback["top_offer"]["price"] / 100.00 : 0.00
               product.top_vendor = ''
               product.top_vendor = response_buyback["asin"] if product.cash > 0
             end
