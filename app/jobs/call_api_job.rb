@@ -127,6 +127,8 @@ class CallApiJob < ActiveJob::Base
           # DataTime Parse error handle
           begin
             days = (Time.now - DateTime.parse(data_hash[index -  i + j + 1]['opendate'])) / (3600 * 24)
+            p "open date *********************************============" + data_hash[index -  i + j + 1]['opendate'] 
+            p "days *********************************============" + days.to_s
           rescue Exception => e
             next
           end
@@ -140,7 +142,7 @@ class CallApiJob < ActiveJob::Base
           else
             product.ltsf = "false"
           end
-
+          p "product ltsf *********************************============" + product.ltsf
           product.tradeinurl = resource_url
           product.rank       = sales_rank
           product.tradein    = trade_in
@@ -157,7 +159,7 @@ class CallApiJob < ActiveJob::Base
 
           # add product to the result data if buyback or tradein value
           if product.cash > 0 || product.tradein != 0
-            products << product 
+            products << product
           else
           end
         }
@@ -171,7 +173,7 @@ class CallApiJob < ActiveJob::Base
                                           percent: @percent
                                         })  
         i = 0
-      else  
+      else
         # puts i
       end
     }
