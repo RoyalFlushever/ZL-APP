@@ -10,6 +10,7 @@
 # Ignore the default SQLite database.
 /db/*.sqlite3
 /db/*.sqlite3-journal
+/vendor/bundle/*
 
 # Ignore all logfiles and tempfiles.
 /log/*
@@ -23,6 +24,8 @@
 .byebug_history
 
 /bower_components/
+
+vendor/bundle/*
 
 # ignore environment variables
 .env
@@ -39,3 +42,4 @@ public/result/*
 
 # SSH key
 *.pem
+
